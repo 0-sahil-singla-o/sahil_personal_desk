@@ -1,0 +1,232 @@
+/* ==========================================================================
+   ANIMATED BACKGROUND + SURFACE CLASSES (dark and light mode)
+   Requires tokens.css loaded first. Every color and timing comes from a token,
+   so switching <html data-theme="dark|light"> restyles everything.
+   The page background is NEVER a flat color: include this file on every page.
+   ========================================================================== */
+
+/* The canvas colour lives on <html>. <body> and page wrappers must stay transparent,
+   or they will hide the animated field (which sits at z-index -1, above <html>'s background). */
+html { 
+  background: var(--color-bg-canvas); 
+  transition: background 0.4s ease; 
+}
+
+body { 
+  background: transparent !important; 
+  color: var(--color-text-primary); 
+  transition: color 0.3s ease; 
+  font-family: var(--font-family-figtree);
+}
+
+.bg-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    var(--color-bg-canvas) 0%,
+    var(--color-bg-canvas) 38%,
+    var(--color-bg-vignette) 100%
+  );
+}
+
+/* Each blob: ::before is the "from" colour, ::after is the "to" colour that fades in and out. */
+.bg-blob { 
+  position: absolute; 
+  width: 78vmax; 
+  height: 78vmax; 
+  border-radius: 50%; 
+  will-change: transform; 
+}
+
+.bg-blob::before, .bg-blob::after { 
+  content: ""; 
+  position: absolute; 
+  inset: 0; 
+  border-radius: 50%; 
+}
+
+.bg-blob::before { 
+  background: radial-gradient(circle, var(--glow-from) 0%, transparent 62%); 
+}
+
+.bg-blob::after {
+  background: radial-gradient(circle, var(--glow-to) 0%, transparent 62%);
+  opacity: 0;
+  animation: bg-shade var(--glow-shade) ease-in-out infinite alternate;
+  animation-delay: var(--glow-delay);
+}
+
+@keyframes bg-shade { to { opacity: 1; } }
+
+.bg-blob-1 { 
+  --glow-from: var(--color-bg-glow-1-from); 
+  --glow-to: var(--color-bg-glow-1-to); 
+  --glow-shade: var(--motion-bg-shade-1); 
+  --glow-delay: var(--motion-bg-shade-delay-1);
+  top: -30vmax; 
+  right: -24vmax; 
+  animation: bg-drift-a var(--motion-bg-drift-1) ease-in-out infinite alternate; 
+}
+
+.bg-blob-2 { 
+  --glow-from: var(--color-bg-glow-2-from); 
+  --glow-to: var(--color-bg-glow-2-to); 
+  --glow-shade: var(--motion-bg-shade-2); 
+  --glow-delay: var(--motion-bg-shade-delay-2);
+  bottom: -34vmax; 
+  left: -28vmax; 
+  animation: bg-drift-b var(--motion-bg-drift-2) ease-in-out infinite alternate; 
+}
+
+.bg-blob-3 { 
+  --glow-from: var(--color-bg-glow-3-from); 
+  --glow-to: var(--color-bg-glow-3-to); 
+  --glow-shade: var(--motion-bg-shade-3); 
+  --glow-delay: var(--motion-bg-shade-delay-3);
+  top: 18vmax; 
+  left: 8vmax; 
+  width: 60vmax; 
+  height: 60vmax; 
+  animation: bg-drift-c var(--motion-bg-drift-3) ease-in-out infinite alternate; 
+}
+
+.bg-blob-4 { 
+  --glow-from: var(--color-bg-glow-4-from); 
+  --glow-to: var(--color-bg-glow-4-to); 
+  --glow-shade: var(--motion-bg-shade-4); 
+  --glow-delay: var(--motion-bg-shade-delay-4);
+  top: 42vmax; 
+  right: -16vmax; 
+  width: 56vmax; 
+  height: 56vmax; 
+  animation: bg-drift-d var(--motion-bg-drift-4) ease-in-out infinite alternate; 
+}
+
+.bg-blob-5 { 
+  --glow-from: var(--color-bg-glow-5-from); 
+  --glow-to: var(--color-bg-glow-5-to); 
+  --glow-shade: var(--motion-bg-shade-5); 
+  --glow-delay: var(--motion-bg-shade-delay-5);
+  top: -16vmax; 
+  left: -22vmax; 
+  width: 62vmax; 
+  height: 62vmax; 
+  animation: bg-drift-e var(--motion-bg-drift-5) ease-in-out infinite alternate; 
+}
+
+@keyframes bg-drift-a { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-70vmax, 62vmax) scale(1.08); } }
+@keyframes bg-drift-b { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(72vmax, -64vmax) scale(0.94); } }
+@keyframes bg-drift-c { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(30vmax, -14vmax) scale(1.12); } 100% { transform: translate(-6vmax, 22vmax) scale(0.96); } }
+@keyframes bg-drift-d { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-60vmax, -48vmax) scale(1.14); } }
+@keyframes bg-drift-e { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(64vmax, 56vmax) scale(0.92); } }
+
+.bg-dust { 
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+}
+
+html.bg-paused .bg-blob, html.bg-paused .bg-blob::after { 
+  animation-play-state: paused; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob, .bg-blob::after { animation: none; }
+  .bg-blob::after { opacity: 0.5; }
+  html, body { transition: none; }
+}
+
+/* ---------------- Surface classes ---------------- */
+.surface-subtle { 
+  background: var(--color-bg-subtle); 
+  border: 1px solid var(--color-border-subtle); 
+  border-radius: 18px; 
+}
+
+.surface-default { 
+  background: var(--color-surface-default); 
+  border: 1px solid var(--color-border-surface); 
+  border-radius: 18px;
+  box-shadow: var(--shadow-surface);
+  -webkit-backdrop-filter: blur(var(--blur-surface)); 
+  backdrop-filter: blur(var(--blur-surface)); 
+}
+
+.surface-raised { 
+  background: var(--color-surface-raised); 
+  border: 1px solid var(--color-border-surface); 
+  border-radius: 18px;
+  box-shadow: var(--shadow-raised);
+  -webkit-backdrop-filter: blur(var(--blur-surface)); 
+  backdrop-filter: blur(var(--blur-surface)); 
+}
+
+.surface-sunken { 
+  background: var(--color-surface-sunken); 
+  border: 1px solid var(--color-border-subtle); 
+  border-radius: 12px; 
+}
+
+.surface-overlay { 
+  background: var(--color-surface-overlay); 
+  border-bottom: 1px solid var(--color-border-subtle);
+  -webkit-backdrop-filter: blur(var(--blur-overlay)); 
+  backdrop-filter: blur(var(--blur-overlay)); 
+}
+
+.surface-inverse { 
+  background: var(--color-surface-inverse); 
+  color: var(--color-text-on-inverse); 
+  border-radius: 12px; 
+}
+
+.surface-disabled { 
+  background: var(--color-surface-disabled); 
+  border: 1px solid var(--color-border-subtle); 
+  color: var(--color-text-muted); 
+  cursor: not-allowed; 
+}
+
+/* ---------------- Typography Roles ---------------- */
+.type-display, h1 {
+  font-family: var(--font-family-outfit) !important;
+  font-size: clamp(36px, 4.4vw, 64px) !important;
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--color-text-primary) !important;
+}
+
+.type-body-lg, .t-lead, #shell-lead {
+  font-family: var(--font-family-figtree) !important;
+  font-size: clamp(16px, 1.8vw, 20px) !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.text-accent {
+  color: var(--color-text-accent) !important;
+}
+
+/* Ensure desk background allows the glowing field to shine through */
+#desk {
+  background: transparent !important;
+}
+
+#shell-evening {
+  display: none !important;
+}
+
+/* Hide React's hardcoded desk room backgrounds so the custom animated field shows */
+div[class*="radial-gradient(75%_65%"],
+div[class*="radial-gradient(120%_90%"],
+div[class*="bg-[radial-gradient"] {
+  display: none !important;
+  opacity: 0 !important;
+}

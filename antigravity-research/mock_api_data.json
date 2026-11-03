@@ -1,0 +1,702 @@
+{
+  "/api/receipts": {
+    "count": 89,
+    "latest": [
+      {
+        "id": 1793692248813,
+        "lines": [
+          "DEMO METALS PTY LTD",
+          "PURCHASE DOCKET 044899",
+          "03/11/2026, 18:50",
+          "Seller: Riverbend Demolition",
+          "--",
+          "Bright copper wire",
+          "  35.3 kg x $11.60\t$409.48",
+          "--",
+          "TOTAL\t$409.48",
+          "GST included\t$37.23",
+          "PAID\tEFT",
+          "--",
+          "Weighed in front of you. Thank you."
+        ]
+      },
+      {
+        "id": 1793694027648,
+        "lines": [
+          "DEMO METALS PTY LTD",
+          "PURCHASE DOCKET 044900",
+          "03/11/2026, 19:20",
+          "Seller: Riverbend Demolition",
+          "--",
+          "Bright copper wire",
+          "  16.1 kg x $11.60\t$186.76",
+          "--",
+          "TOTAL\t$186.76",
+          "GST included\t$16.98",
+          "PAID\tEFT",
+          "--",
+          "Weighed in front of you. Thank you."
+        ]
+      },
+      {
+        "id": 1793694771336,
+        "lines": [
+          "DEMO METALS PTY LTD",
+          "PURCHASE DOCKET 044901",
+          "03/11/2026, 19:32",
+          "Seller: Riverbend Demolition",
+          "--",
+          "Mixed brass",
+          "  27.6 kg x $6.60\t$182.16",
+          "--",
+          "TOTAL\t$182.16",
+          "GST included\t$16.56",
+          "PAID\tEFT",
+          "--",
+          "Weighed in front of you. Thank you."
+        ]
+      }
+    ]
+  },
+  "/api/plant": {
+    "waters": 522,
+    "lastWatered": 1793706650792
+  },
+  "/api/diary": {
+    "pages": [
+      {
+        "id": "mvta3kcg2d8e7c",
+        "name": "",
+        "text": "hi i love this",
+        "drawing": false,
+        "at": 1793262344128
+      },
+      {
+        "id": "mvtaqk0tcb80ff",
+        "name": "Cumhuriyet Bayramımız kutlu ol",
+        "text": "The Republic is the crowning victory of the War of Independence, waged amidst great scarcity. This treasure, bequeathed to us by Gazi Mustafa Kemal Atatürk and his comrades-in-arms, embodies the Turkish nation’s ideal of living in freedom. It is our solemn duty to safeguard our Republic, uphold our flag, and protect our homeland.\n\nCumhuriyet Bayramımız kutlu olsun!",
+        "drawing": false,
+        "at": 1793263416797
+      },
+      {
+        "id": "mvtarpu7ace607",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793263470991
+      },
+      {
+        "id": "mvtc43c04865c9",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793265727968
+      },
+      {
+        "id": "mvtc8tiyc9e2bc",
+        "name": "",
+        "text": "what a amazing portfolio brother, great work, i just loved this",
+        "drawing": false,
+        "at": 1793265948538
+      },
+      {
+        "id": "mvtcy2f57d69ee",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793267126465
+      },
+      {
+        "id": "mvtdkkvu3ff0a8",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793268176826
+      },
+      {
+        "id": "mvtf6p9u871e12",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793270888562
+      },
+      {
+        "id": "mvtg9l0ac5378e",
+        "name": "tolani",
+        "text": "tywc efedtehgcgh ugwdcshhhshfj s ecuu dv dvgdjvgv gjg d d ivejv hhevh sg ehvc sg hgwceEgcgedxeegd xigfjc geidj3vfbcv cv hcv eidyevch s. cehjy ehvf vefugefghef efejggejf gjef efeggfefg efjgef efggef gefjg gegfjg ejgfgegjgjgjgj",
+        "drawing": false,
+        "at": 1793272702618
+      },
+      {
+        "id": "mvtgabmu5119f4",
+        "name": "tolani",
+        "text": "",
+        "drawing": true,
+        "at": 1793272737126
+      },
+      {
+        "id": "mvthfzu5e9f8e3",
+        "name": "tariqbahaz",
+        "text": "",
+        "drawing": true,
+        "at": 1793274681389
+      },
+      {
+        "id": "mvthk0dj65880a",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793274868711
+      },
+      {
+        "id": "mvti94ht561325",
+        "name": "",
+        "text": "kkk",
+        "drawing": true,
+        "at": 1793276040450
+      },
+      {
+        "id": "mvtjs65t6d8eee",
+        "name": "mess",
+        "text": "",
+        "drawing": true,
+        "at": 1793278608689
+      },
+      {
+        "id": "mvtm08qtc3bf51",
+        "name": "",
+        "text": "hi",
+        "drawing": false,
+        "at": 1793282344517
+      },
+      {
+        "id": "mvtm3v5772a30c",
+        "name": "P",
+        "text": "Just looking at ur website",
+        "drawing": false,
+        "at": 1793282513515
+      },
+      {
+        "id": "mvto3ng97cb488",
+        "name": "ogk",
+        "text": "",
+        "drawing": true,
+        "at": 1793285862777
+      },
+      {
+        "id": "mvtuh7nkf33c09",
+        "name": "",
+        "text": "your portfolio was soo nice.i enjoy it much, its inspire me.",
+        "drawing": false,
+        "at": 1793296573184
+      },
+      {
+        "id": "mvtxdik87fcf43",
+        "name": "",
+        "text": "hiii how b  are you",
+        "drawing": false,
+        "at": 1793301439544
+      },
+      {
+        "id": "mvtxplfrb19a22",
+        "name": "",
+        "text": "Querido diario, el Eros da un poquito de asco",
+        "drawing": false,
+        "at": 1793302003143
+      },
+      {
+        "id": "mvtxsb1d1552bf",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793302129634
+      },
+      {
+        "id": "mvu7w8yd269fd7",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793319109717
+      },
+      {
+        "id": "mvudml6hc2176a",
+        "name": "Jaydev Mandaliya",
+        "text": "Itz Amazing Man !!",
+        "drawing": false,
+        "at": 1793328736697
+      },
+      {
+        "id": "mvuj0n2t7a115f",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793337790421
+      },
+      {
+        "id": "mvul3v59735274",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793341300077
+      },
+      {
+        "id": "mvul76le4bbb99",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793341454882
+      },
+      {
+        "id": "mvunjcyxb1a30a",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793345382249
+      },
+      {
+        "id": "mvunziuc9e04d9",
+        "name": "helen",
+        "text": "",
+        "drawing": true,
+        "at": 1793346136356
+      },
+      {
+        "id": "mvup2xef04dc1c",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793347974807
+      },
+      {
+        "id": "mvupawcj00a518",
+        "name": "nila",
+        "text": "hi, i like women - nila",
+        "drawing": true,
+        "at": 1793348346691
+      },
+      {
+        "id": "mvupmp7lc2d729",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793348897313
+      },
+      {
+        "id": "mvuqf6ulf802f8",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793350226541
+      },
+      {
+        "id": "mvur8226bbbf7e",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793351573358
+      },
+      {
+        "id": "mvursqe45e8e2c",
+        "name": "REMIDUS LTD",
+        "text": "We absolutely loved this! Fantastic Work. Very well thought out and clean UX/UI. Drop us an email when you have a minute - we may have some projects you might be interested in.",
+        "drawing": true,
+        "at": 1793352538012
+      },
+      {
+        "id": "mvus14a80fd83a",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793352929264
+      },
+      {
+        "id": "mvuse0f6c3a1e8",
+        "name": "Meyrem Ş.",
+        "text": "Dear Pradip;\n \nWe literally screamed today while looking through the details on your site. It’s absolutely incredible—we absolutely love it!\n\nHere’s a YouTube link for you",
+        "drawing": true,
+        "at": 1793353530786
+      },
+      {
+        "id": "mvusvm6x73cdd1",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793354352153
+      },
+      {
+        "id": "mvusx3s7327dfb",
+        "name": "shobhi",
+        "text": "",
+        "drawing": true,
+        "at": 1793354421607
+      },
+      {
+        "id": "mvusyp9h1bb735",
+        "name": "sodaaa",
+        "text": "",
+        "drawing": true,
+        "at": 1793354496101
+      },
+      {
+        "id": "mvut61qt8aca6b",
+        "name": "shobi and soda",
+        "text": "",
+        "drawing": true,
+        "at": 1793354838869
+      },
+      {
+        "id": "mvutr2g517e886",
+        "name": "",
+        "text": "jfdnjdnjdgn",
+        "drawing": true,
+        "at": 1793355819557
+      },
+      {
+        "id": "mvuttbvc61af61",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793355925080
+      },
+      {
+        "id": "mvuuhzhyaadc6c",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793357075446
+      },
+      {
+        "id": "mvuum7e5e22c9e",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793357272301
+      },
+      {
+        "id": "mvuxa7r3e5b3fa",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793361751743
+      },
+      {
+        "id": "mvuxaqtd812904",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793361776449
+      },
+      {
+        "id": "mvuxcl2d4696e7",
+        "name": "",
+        "text": "Sorry :)",
+        "drawing": false,
+        "at": 1793361862309
+      },
+      {
+        "id": "mvuxgvahe2e163",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793362062186
+      },
+      {
+        "id": "mvuyx0hy3dcb70",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793364495046
+      },
+      {
+        "id": "mvv0o6l444f10e",
+        "name": "Laura",
+        "text": "",
+        "drawing": true,
+        "at": 1793367442264
+      },
+      {
+        "id": "mvv2s1uje0b327",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793370981979
+      },
+      {
+        "id": "mvvm4fqk30dae9",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793403472556
+      },
+      {
+        "id": "mvvqsfdp9e89a9",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793411310301
+      },
+      {
+        "id": "mvvtp58z9a48a1",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793416196052
+      },
+      {
+        "id": "mvw21mpze56c52",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793430215495
+      },
+      {
+        "id": "mvw24yl106232e",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793430370837
+      },
+      {
+        "id": "mvw4u5o8ed3535",
+        "name": "Dhanu",
+        "text": "",
+        "drawing": true,
+        "at": 1793434905656
+      },
+      {
+        "id": "mvwa63rrb6c616",
+        "name": "",
+        "text": "yatendra joshi is here from india",
+        "drawing": false,
+        "at": 1793443861143
+      },
+      {
+        "id": "mvwbvhy2189b67",
+        "name": "@27_rohittt",
+        "text": "-rohit",
+        "drawing": true,
+        "at": 1793446725530
+      },
+      {
+        "id": "mvwkisigdbbac5",
+        "name": "- Rig, India",
+        "text": "To whomsoever it may concern\nHope you have a great day, a great and peaceful life and may all your dreams come true.\n\nMay you have a blessed and happy life.",
+        "drawing": false,
+        "at": 1793461249240
+      },
+      {
+        "id": "mvwkwhcv9f9a95",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793461887967
+      },
+      {
+        "id": "mvwosezm59da41",
+        "name": "paresh",
+        "text": "best thing i have ever seen in my life \ngood work mate \nthere is lots of things i can learn from you ,, xoxo",
+        "drawing": false,
+        "at": 1793468416738
+      },
+      {
+        "id": "mvwq2y1wa812dc",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793470587620
+      },
+      {
+        "id": "mvwzma28c8bc82",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793486606192
+      },
+      {
+        "id": "mvxrvsy4fc1805",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793534079820
+      },
+      {
+        "id": "mvy34opo0ec21c",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793552970012
+      },
+      {
+        "id": "mvyu8z023d6e09",
+        "name": "saugat",
+        "text": "",
+        "drawing": true,
+        "at": 1793598519602
+      },
+      {
+        "id": "mvyu9vnw8a703d",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793598561932
+      },
+      {
+        "id": "mvywoykj6fe9be",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793602624771
+      },
+      {
+        "id": "mvyy5uy31bdc9a",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793605092843
+      },
+      {
+        "id": "mvyygbncc1bd03",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793605581048
+      },
+      {
+        "id": "mvz2c4od930927",
+        "name": "",
+        "text": "HI, I am Yuvaraj, I really liked your design, Keep going....!!!",
+        "drawing": true,
+        "at": 1793612103853
+      },
+      {
+        "id": "mvz2er3y15e889",
+        "name": "",
+        "text": "From Chirala",
+        "drawing": false,
+        "at": 1793612226239
+      },
+      {
+        "id": "mvz5xn5m887fdd",
+        "name": "Sahil",
+        "text": "",
+        "drawing": true,
+        "at": 1793618146426
+      },
+      {
+        "id": "mvz756rod83b2d",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793620178052
+      },
+      {
+        "id": "mvz7bs2l802e3e",
+        "name": "",
+        "text": "",
+        "drawing": true,
+        "at": 1793620485597
+      },
+      {
+        "id": "mw0e4ghve58ce1",
+        "name": "",
+        "text": "Dear diary",
+        "drawing": false,
+        "at": 1793692367491
+      },
+      {
+        "id": "mw0eucojb2160e",
+        "name": "a friend",
+        "text": "",
+        "drawing": true,
+        "at": 1793693575603
+      },
+      {
+        "id": "mw0f0ktnbfa86a",
+        "name": "friend of a friend, dual tone",
+        "text": "",
+        "drawing": true,
+        "at": 1793693866091
+      },
+      {
+        "id": "mw0f6iyb7063bf",
+        "name": "",
+        "text": "Hello everyone",
+        "drawing": false,
+        "at": 1793694143603
+      }
+    ]
+  },
+  "/api/songs?all=1": {
+    "error": "That key isn't right."
+  },
+  "/api/poll": {
+    "poll": {
+      "id": "mvvz0hnf",
+      "question": "What should go on my desk next?",
+      "options": [
+        {
+          "label": "Mini PS5",
+          "icon": "gamepad",
+          "about": "Plug it into my laptop and play here with friends. Your phone is the controller.",
+          "votes": 44
+        },
+        {
+          "label": "Polaroid camera",
+          "icon": "camera",
+          "about": "Take a photo with your camera. It prints as a polaroid and stays on my desk.",
+          "votes": 18
+        },
+        {
+          "label": "Hot Wheels loop",
+          "icon": "car",
+          "about": "A loop track on the desk. Race a little car and set the fastest lap.",
+          "votes": 19
+        }
+      ],
+      "endsAt": 1793943523419,
+      "total": 81,
+      "over": false
+    },
+    "mine": null
+  },
+  "/api/feed?wall=1": {
+    "count": 5,
+    "meals": [
+      {
+        "id": "cs_live_a1boGRkgHur3hWeyX1SMIKAQmUQ7k5f01YZ4Bs6jtGvwP3thAOMgD3MJNj",
+        "name": "Nikolai",
+        "note": "Soooo good 👏🏼",
+        "meal": "snack",
+        "at": 1793519211000
+      },
+      {
+        "id": "cs_live_a1u9Bc0z19dO9WAY6OkvcjwKctz4OnGQClJmi3J2sytpTJ2m7DGNAXR3bT",
+        "name": "Rita",
+        "note": "Sending love",
+        "meal": "dinner",
+        "at": 1793519368000
+      },
+      {
+        "id": "cs_live_a1ofK1L8OgJaYEWxNn1tRLZD855gSNJ28LGo0w87r6jOLdnOMsVwUPpRxq",
+        "name": "Tayne",
+        "note": "Neat work bro 👏🏼",
+        "meal": "dinner",
+        "at": 1793518547000
+      },
+      {
+        "id": "cs_live_a11bGshxAtqwZxBRMSJJtRU1Cy2kJzvKwQdmisgbJ7Vs9Hc8RRVU7qWTeE",
+        "name": "Mitsi",
+        "note": "Omg hi you’re adorable",
+        "meal": "snack",
+        "at": 1793517380000
+      },
+      {
+        "id": "cs_live_a1TaHZqmT3L2IuUa3QOoRbplUiS3zGdMhZnnjqKKh24qnmsIcJcixVxccx",
+        "name": "Tanya",
+        "note": "The first meal is on me. Keep it going",
+        "meal": "snack",
+        "at": 1793516923000
+      }
+    ]
+  }
+}

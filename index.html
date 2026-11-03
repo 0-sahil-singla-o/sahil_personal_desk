@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sahil Singla · 3D Web Experience</title>
+    <meta
+      name="description"
+      content="Interactive 3D workspace built with Three.js and WebGL."
+    />
+    <meta name="author" content="Sahil Singla" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="canonical" href="/" />
+    <link rel="icon" href="/favicon.ico" type="image/png" />
+    <link rel="apple-touch-icon" href="/pd-favicon.png" />
+
+    <!-- Sets the theme before first paint: saved choice, else system setting, else dark -->
+    <script>
+      try {
+        var t = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/tokens.css">
+    <link rel="stylesheet" href="/background.css">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta property="og:site_name" content="Sahil Singla" />
+    <meta property="og:title" content="Sahil Singla · 3D Web Experience" />
+    <meta
+      property="og:description"
+      content="Interactive 3D workspace built with Three.js and WebGL."
+    />
+    <meta property="og:image" content="/og-desk.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/og-desk.png" />
+
+    <!-- Inter is served from this site and fetched straight away; Caveat (the handwriting) only once something's written. -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script>
+      // Before anything else: can this device draw the desk in 3D at a usable speed? A browser without a
+      // graphics card (it would draw in software, a frame every few seconds) gets a picture of the desk instead.
+      // The first paint below and the app both go by this.
+      (function () {
+        var gl = false;
+        try {
+          var opts = { failIfMajorPerformanceCaveat: true };
+          var canvas = document.createElement("canvas");
+          var ctx = canvas.getContext("webgl2", opts) || canvas.getContext("webgl", opts);
+          if (ctx) {
+            gl = true;
+            var lose = ctx.getExtension("WEBGL_lose_context");
+            if (lose) lose.loseContext();
+          }
+        } catch (e) {}
+        window.__deskGL = gl;
+        // Settles once the headline has been painted (a couple of seconds at most). The desk's own downloads
+        // wait for it, so the first thing anyone sees never shares the connection with them.
+        window.__painted = new Promise(function (resolve) {
+          var go = function () { requestAnimationFrame(function () { setTimeout(resolve, 0); }); };
+          try {
+            new PerformanceObserver(function (list, observer) { observer.disconnect(); go(); }).observe({ type: "largest-contentful-paint", buffered: true });
+          } catch (e) {
+            addEventListener("load", go);
+          }
+          setTimeout(resolve, 2500);
+        });
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-CVLljmmv.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-ZJqfgMEj.css">
+    <script>if(location.pathname==="/"&&window.__deskGL!==false)Promise.resolve(window.__painted).then(function(){return document.fonts.ready}).then(function(){[["/assets/DeskScene-tZGhJadU.js",1],["/assets/three.module-CUjkK1mn.js",1],["/assets/CatFace-CbD7fJJW.js",1],["/assets/snapshot-DTyrC_Il.js",1],["/assets/sleeve-DGAWclPB.js",1],["/assets/pause-DxWOoMlk.js",1],["/assets/play-j_2k2-ao.js",1],["/assets/plus-vk532uRI.js",1],["/assets/poll-tgD12__Z.js",1],["/assets/xrayParts-BGXHN5ie.js",1],["/desk/laptop.webp",0],["/desk/tablet.webp",0],["/desk/phone.webp",0]].forEach(function(x){var l=document.createElement("link");l.rel=x[1]?"modulepreload":"preload";if(!x[1]){l.as="image";l.crossOrigin="anonymous"}l.href=x[0];l.fetchPriority="low";document.head.appendChild(l)})})</script>
+  </head>
+
+  <body>
+    <!-- Theme Switcher Pill (Controlled by 3D Lamp & Buttons) -->
+    <div id="theme-switch" class="surface-raised" style="position: fixed; top: 16px; left: 16px; z-index: 60; display: flex; align-items: center; padding: 3px 5px; gap: 3px; font-family: var(--font-family-figtree); font-size: 13px; font-weight: 500;">
+      <button id="theme-btn-dark" onclick="window.toggleThemeWithLamp(true)" style="background: var(--color-accent-subtle); border: none; cursor: pointer; padding: 4px 10px; border-radius: 12px; color: var(--color-accent-text); font-weight: 600; transition: all 0.2s;" title="Switch to Dark mode (Turns on the 3D desk lamp)">🌙 Dark</button>
+      <button id="theme-btn-light" onclick="window.toggleThemeWithLamp(false)" style="background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 12px; color: var(--color-text-muted); font-weight: 400; transition: all 0.2s;" title="Switch to Light mode (Turns off the 3D desk lamp)">☀️ Light</button>
+    </div>
+    <script>
+      window.toggleThemeWithLamp = function(wantDark) {
+        if (window.__toggleDeskLamp) {
+          window.__toggleDeskLamp(wantDark);
+        } else if (window.BgField) {
+          window.BgField.setTheme(wantDark ? 'dark' : 'light');
+          updateThemeUi(wantDark ? 'dark' : 'light');
+        }
+      };
+
+      function updateThemeUi(mode) {
+        var d = document.getElementById('theme-btn-dark');
+        var l = document.getElementById('theme-btn-light');
+        if (!d || !l) return;
+        if (mode === 'light') {
+          l.style.background = 'var(--color-accent-subtle)';
+          l.style.color = 'var(--color-accent-text)';
+          l.style.fontWeight = '600';
+          d.style.background = 'transparent';
+          d.style.color = 'var(--color-text-muted)';
+          d.style.fontWeight = '400';
+        } else {
+          d.style.background = 'var(--color-accent-subtle)';
+          d.style.color = 'var(--color-accent-text)';
+          d.style.fontWeight = '600';
+          l.style.background = 'transparent';
+          l.style.color = 'var(--color-text-muted)';
+          l.style.fontWeight = '400';
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        var t = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateThemeUi(t);
+      });
+      // Periodically style the live h1 to have the accent colored span
+      setInterval(function() {
+        var h1 = document.querySelector('h1');
+        if (h1 && !h1.querySelector('.text-accent') && h1.textContent.includes('Sahil.')) {
+          h1.innerHTML = 'Hi, I\'m <span class="text-accent">Sahil.</span>';
+        }
+      }, 300);
+    </script>
+    <!--
+      The desk's first paint, before any of the app has loaded: the room, the headline and, on a device that
+      can't draw the desk in 3D, a picture of it. The app replaces it with exactly the same thing.
+    -->
+    <div id="root">
+      <div style="opacity: 1">
+        <main id="main">
+          <section
+            id="desk"
+            aria-label="My desk"
+            class="relative h-[100svh] min-h-[480px] overflow-hidden sm:min-h-[640px] bg-[radial-gradient(120%_90%_at_50%_45%,#FFFFFF_0%,#F4F4F6_55%,#E8E8EC_100%)]"
+          >
+            <div
+              id="shell-evening"
+              aria-hidden="true"
+              class="absolute inset-0 bg-[radial-gradient(75%_65%_at_66%_50%,#6B5442_0%,#47392F_36%,#2E2620_70%,#221C18_100%)] transition-opacity duration-700 opacity-0"
+            ></div>
+            <div class="pointer-events-none absolute inset-x-0 top-0 pt-[calc(2.75rem+env(safe-area-inset-top))] text-center sm:pt-14">
+              <div class="container-x">
+                <h1 id="shell-title" class="type-display font-semibold leading-[1.05] tracking-[-0.03em] transition-colors duration-700">
+                  Hi, I'm <span class="text-accent">Sahil.</span>
+                </h1>
+                <p id="shell-lead" class="t-lead mx-auto mt-3 max-w-[34rem] transition-colors duration-700">
+                  I build the software businesses run on. Everything on this desk is real and running.
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script>
+      // Evening in Sydney (the desk lamp's on): the room is dim and warm from the first paint, not white first.
+      // This is src/lib/sydneySun.ts and the lamp's remembered switch in src/desk/store.ts, in brief.
+      (function () {
+        var evening = false;
+        try {
+          var at = new Date();
+          var rad = function (d) { return (d * Math.PI) / 180; };
+          var parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney", year: "numeric", month: "2-digit", day: "2-digit" })
+            .format(at).split("-").map(Number);
+          var sun = function (offset) {
+            var midnight = Date.UTC(parts[0], parts[1] - 1, parts[2] + offset);
+            var g = ((2 * Math.PI) / 365) * Math.round((midnight - Date.UTC(parts[0], 0, 1)) / 86400000);
+            var eq = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+            var decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+            var ha = (Math.acos(Math.cos(rad(90.833)) / (Math.cos(rad(-33.87)) * Math.cos(decl)) - Math.tan(rad(-33.87)) * Math.tan(decl)) * 180) / Math.PI;
+            return { rise: midnight + (720 - 4 * (151.21 + ha) - eq) * 60000, set: midnight + (720 - 4 * (151.21 - ha) - eq) * 60000 };
+          };
+          var today = sun(0);
+          evening = at.getTime() < today.rise || at.getTime() >= today.set;
+          var saved = JSON.parse(localStorage.getItem("sahildesk:lamp") || "null");
+          if (saved && Date.now() < saved.until) evening = saved.evening;
+        } catch (e) {}
+        if (evening) {
+          document.getElementById("shell-evening").classList.replace("opacity-0", "opacity-100");
+          document.getElementById("shell-title").classList.add("text-[#F3E9DA]");
+          document.getElementById("shell-lead").classList.add("text-[#CDBBA5]");
+        }
+        if (!window.__deskGL) {
+          var img = document.createElement("img");
+          img.src = matchMedia("(max-width: 767px)").matches ? "/desk/poster-tall.webp" : "/desk/poster.webp";
+          img.alt = "My desk: a laptop, a tablet with a receipt printer, and a phone, each running something I built";
+          img.className = "absolute inset-0 h-full w-full object-cover";
+          img.setAttribute("fetchpriority", "high");
+          document.getElementById("shell-evening").after(img);
+        }
+      })();
+    </script>
+    <script src="/background.js" defer></script>
+  </body>
+</html>

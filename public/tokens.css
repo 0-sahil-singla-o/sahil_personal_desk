@@ -1,0 +1,301 @@
+/* ==========================================================================
+   DESIGN TOKENS: INDIGO-VIOLET THEME (TIER 1 PRIMITIVES & TIER 2 SEMANTIC)
+   Dark is default. Light applies with [data-theme="light"] on <html>.
+   ========================================================================== */
+
+:root {
+  /* ---------------- Tier 1: Primitives ---------------- */
+
+  /* Neutral scale (Indigo-Violet) */
+  --neutral-50: #F6F3FB;
+  --neutral-100: #ECE7F6;
+  --neutral-200: #D9D0EC;
+  --neutral-300: #BBAEDB;
+  --neutral-400: #9484BF;
+  --neutral-500: #6F5F9C;
+  --neutral-600: #554780;
+  --neutral-700: #3E3363;
+  --neutral-800: #2A2146;
+  --neutral-900: #1B1230;
+  --neutral-950: #0F0A1C;
+
+  /* Accent scale (Violet) */
+  --accent-50: #F5F3FF;
+  --accent-100: #EDE9FE;
+  --accent-200: #DDD6FE;
+  --accent-300: #C4B5FD;
+  --accent-400: #A78BFA;
+  --accent-500: #8B5CF6;
+  --accent-600: #7C3AED;
+  --accent-700: #6D28D9;
+  --accent-800: #5B21B6;
+  --accent-900: #4C1D95;
+  --accent-950: #2E1065;
+
+  /* Highlight 1 (Teal) */
+  --highlight1-50: #F0FDFA;
+  --highlight1-100: #CCFBF1;
+  --highlight1-200: #99F6E4;
+  --highlight1-300: #5EEAD4;
+  --highlight1-400: #2DD4BF;
+  --highlight1-500: #14B8A6;
+  --highlight1-600: #0D9488;
+  --highlight1-700: #0F766E;
+  --highlight1-800: #115E59;
+  --highlight1-900: #134E4A;
+  --highlight1-950: #042F2E;
+
+  /* Highlight 2 (Pink) */
+  --highlight2-50: #FDF2F8;
+  --highlight2-100: #FCE7F3;
+  --highlight2-200: #FBCFE8;
+  --highlight2-300: #F9A8D4;
+  --highlight2-400: #F472B6;
+  --highlight2-500: #EC4899;
+  --highlight2-600: #DB2777;
+  --highlight2-700: #BE185D;
+  --highlight2-800: #9D174D;
+  --highlight2-900: #831843;
+  --highlight2-950: #500724;
+
+  /* Highlight 3 (Fuchsia) */
+  --highlight3-50: #FDF4FF;
+  --highlight3-100: #FAE8FF;
+  --highlight3-200: #F5D0FE;
+  --highlight3-300: #F0ABFC;
+  --highlight3-400: #E879F9;
+  --highlight3-500: #D946EF;
+  --highlight3-600: #C026D3;
+  --highlight3-700: #A21CAF;
+  --highlight3-800: #86198F;
+  --highlight3-900: #701A75;
+  --highlight3-950: #4A044E;
+
+  /* Status Ramps */
+  --success-400: #4ADE80;
+  --success-500: #22C55E;
+  --success-700: #15803D;
+  --success-800: #166534;
+
+  --warning-400: #FBBF24;
+  --warning-500: #F59E0B;
+  --warning-600: #D97706;
+  --warning-800: #92400E;
+
+  --error-400: #F87171;
+  --error-500: #EF4444;
+  --error-700: #B91C1C;
+  --error-800: #991B1B;
+
+  --info-400: #38BDF8;
+  --info-500: #0EA5E9;
+  --info-700: #0369A1;
+  --info-800: #075985;
+
+  /* Pure Solids */
+  --primitive-white: #FFFFFF;
+  --primitive-black: #000000;
+  --primitive-transparent: rgba(0, 0, 0, 0);
+
+  /* Light Solids */
+  --pearl-50: #F9F7FD;
+  --lavender-100: #E6DFF5;
+  --lilac-100: #EDE8F6;
+  --ink-700: #433765;
+  --ink-500: #685794;
+  --ink-400: #8F7FA9;
+  --periwinkle-400: #818CF8;
+  --orchid-400: #C084FC;
+  --purple-500: #A855F7;
+
+  /* Alpha Primitives */
+  --neutral-light-a4: rgba(246, 243, 251, 0.04);
+  --neutral-light-a8: rgba(246, 243, 251, 0.08);
+  --neutral-light-a12: rgba(246, 243, 251, 0.12);
+  --neutral-light-a16: rgba(246, 243, 251, 0.16);
+  --neutral-light-a24: rgba(246, 243, 251, 0.24);
+  --neutral-light-a48: rgba(246, 243, 251, 0.48);
+
+  --neutral-mid-a8: rgba(111, 95, 156, 0.08);
+  --neutral-mid-a9: rgba(111, 95, 156, 0.09);
+  --neutral-mid-a15: rgba(111, 95, 156, 0.15);
+  --neutral-mid-a16: rgba(111, 95, 156, 0.16);
+  --neutral-mid-a24: rgba(111, 95, 156, 0.24);
+  --neutral-mid-a48: rgba(111, 95, 156, 0.48);
+
+  --white-a48: rgba(255, 255, 255, 0.48);
+  --white-a74: rgba(255, 255, 255, 0.74);
+  --white-a92: rgba(255, 255, 255, 0.92);
+  --pearl-50-a84: rgba(249, 247, 253, 0.84);
+
+  /* Typography Families */
+  --font-family-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-family-figtree: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-family-jetbrains-mono: 'JetBrains Mono', monospace;
+
+  /* Motion Timing */
+  --motion-bg-drift-1: 52s;
+  --motion-bg-drift-2: 58s;
+  --motion-bg-drift-3: 66s;
+  --motion-bg-drift-4: 70s;
+  --motion-bg-drift-5: 62s;
+
+  --motion-bg-shade-1: 34s;
+  --motion-bg-shade-2: 41s;
+  --motion-bg-shade-3: 47s;
+  --motion-bg-shade-4: 38s;
+  --motion-bg-shade-5: 44s;
+
+  --motion-bg-shade-delay-1: -6s;
+  --motion-bg-shade-delay-2: -18s;
+  --motion-bg-shade-delay-3: -30s;
+  --motion-bg-shade-delay-4: -12s;
+  --motion-bg-shade-delay-5: -24s;
+
+  /* ---------------- Tier 2: Dark Mode (Default) ---------------- */
+  --color-bg-canvas: #2E1065;
+  --color-bg-vignette: #1B1230;
+  --color-bg-subtle: rgba(246, 243, 251, 0.04);
+
+  --color-surface-default: rgba(246, 243, 251, 0.08);
+  --color-surface-raised: rgba(246, 243, 251, 0.12);
+  --color-surface-sunken: #1B1230;
+  --color-surface-overlay: rgba(42, 33, 70, 0.72);
+  --color-surface-inverse: #F6F3FB;
+  --color-surface-disabled: rgba(111, 95, 156, 0.08);
+
+  --shadow-surface: none;
+  --shadow-raised: none;
+  --blur-surface: 16px;
+  --blur-overlay: 12px;
+
+  /* Dark Animated Glows */
+  --color-bg-glow-1-from: rgba(111, 95, 156, 0.48);
+  --color-bg-glow-1-to: rgba(236, 72, 153, 0.30);
+  --color-bg-glow-2-from: rgba(139, 92, 246, 0.48);
+  --color-bg-glow-2-to: rgba(14, 165, 233, 0.28);
+  --color-bg-glow-3-from: rgba(139, 92, 246, 0.24);
+  --color-bg-glow-3-to: rgba(217, 70, 239, 0.26);
+  --color-bg-glow-4-from: rgba(236, 72, 153, 0.22);
+  --color-bg-glow-4-to: rgba(111, 95, 156, 0.46);
+  --color-bg-glow-5-from: rgba(124, 58, 237, 0.42);
+  --color-bg-glow-5-to: rgba(14, 165, 233, 0.24);
+
+  /* Dark Dust */
+  --color-bg-dust-1: #FFFFFF;
+  --color-bg-dust-2: #C4B5FD;
+  --color-bg-dust-3: #EC4899;
+  --color-bg-dust-4: #D946EF;
+  --color-bg-dust-5: #2DD4BF;
+
+  --bg-dust-count-min: 100;
+  --bg-dust-count-max: 190;
+  --bg-dust-radius-min: 0.5;
+  --bg-dust-halo-alpha: 0.14;
+  --bg-dust-area-per-particle: 8500;
+  --bg-dust-parallax: 16;
+
+  /* Dark Text */
+  --color-text-primary: #F6F3FB;
+  --color-text-secondary: #D9D0EC;
+  --color-text-tertiary: #BBAEDB;
+  --color-text-muted: #9484BF;
+  --color-text-accent: #A78BFA;
+  --color-text-disabled: #554780;
+  --color-text-on-inverse: #1B1230;
+  --color-text-on-solid: #1B1230;
+  --color-text-on-warning: #1B1230;
+
+  /* Dark Borders & Focus */
+  --color-border-subtle: rgba(246, 243, 251, 0.08);
+  --color-border-surface: rgba(246, 243, 251, 0.16);
+  --color-border-default: rgba(246, 243, 251, 0.24);
+  --color-border-strong: rgba(246, 243, 251, 0.48);
+  --color-border-disabled: rgba(246, 243, 251, 0.08);
+  --color-focus-ring: #A78BFA;
+  --color-focus-halo: rgba(139, 92, 246, 0.24);
+  --focus-width: 2px;
+  --focus-offset: 2px;
+
+  /* Dark Interactive Accents */
+  --color-accent-solid: #C4B5FD;
+  --color-accent-solid-hover: #DDD6FE;
+  --color-accent-solid-active: #A78BFA;
+  --color-accent-subtle: rgba(139, 92, 246, 0.16);
+  --color-accent-subtle-hover: rgba(139, 92, 246, 0.24);
+  --color-accent-border: #A78BFA;
+  --color-accent-text: #C4B5FD;
+  --color-accent-text-hover: #DDD6FE;
+}
+
+/* ---------------- Tier 2: Light Mode ---------------- */
+:root[data-theme="light"],
+html.light {
+  --color-bg-canvas: #F9F7FD;
+  --color-bg-vignette: #E6DFF5;
+  --color-bg-subtle: rgba(255, 255, 255, 0.48);
+
+  --color-surface-default: rgba(255, 255, 255, 0.74);
+  --color-surface-raised: rgba(255, 255, 255, 0.92);
+  --color-surface-sunken: #EDE8F6;
+  --color-surface-overlay: rgba(249, 247, 253, 0.84);
+  --color-surface-inverse: #1B1230;
+  --color-surface-disabled: rgba(111, 95, 156, 0.08);
+
+  --shadow-surface: 0 10px 30px rgba(111, 95, 156, 0.09);
+  --shadow-raised: 0 16px 48px rgba(111, 95, 156, 0.16);
+
+  /* Light Animated Glows */
+  --color-bg-glow-1-from: rgba(167, 139, 250, 0.22);
+  --color-bg-glow-1-to: rgba(244, 114, 182, 0.20);
+  --color-bg-glow-2-from: rgba(129, 140, 248, 0.20);
+  --color-bg-glow-2-to: rgba(56, 189, 248, 0.18);
+  --color-bg-glow-3-from: rgba(192, 132, 252, 0.16);
+  --color-bg-glow-3-to: rgba(232, 121, 249, 0.16);
+  --color-bg-glow-4-from: rgba(244, 114, 182, 0.18);
+  --color-bg-glow-4-to: rgba(168, 85, 247, 0.18);
+  --color-bg-glow-5-from: rgba(139, 92, 246, 0.18);
+  --color-bg-glow-5-to: rgba(45, 212, 191, 0.18);
+
+  /* Light Dust */
+  --color-bg-dust-1: #8B5CF6;
+  --color-bg-dust-2: #A78BFA;
+  --color-bg-dust-3: #EC4899;
+  --color-bg-dust-4: #0EA5E9;
+  --color-bg-dust-5: #2DD4BF;
+
+  --bg-dust-count-min: 90;
+  --bg-dust-count-max: 160;
+  --bg-dust-radius-min: 0.6;
+  --bg-dust-halo-alpha: 0.18;
+
+  /* Light Text */
+  --color-text-primary: #1B1230;
+  --color-text-secondary: #433765;
+  --color-text-tertiary: #685794;
+  --color-text-muted: #8F7FA9;
+  --color-text-accent: #6D28D9;
+  --color-text-disabled: #BBAEDB;
+  --color-text-on-inverse: #F6F3FB;
+  --color-text-on-solid: #F6F3FB;
+  --color-text-on-warning: #1B1230;
+
+  /* Light Borders & Focus */
+  --color-border-subtle: rgba(111, 95, 156, 0.09);
+  --color-border-surface: rgba(111, 95, 156, 0.15);
+  --color-border-default: rgba(111, 95, 156, 0.24);
+  --color-border-strong: #6F5F9C;
+  --color-border-disabled: rgba(111, 95, 156, 0.09);
+  --color-focus-ring: #6D28D9;
+  --color-focus-halo: rgba(139, 92, 246, 0.24);
+
+  /* Light Interactive Accents */
+  --color-accent-solid: #7C3AED;
+  --color-accent-solid-hover: #6D28D9;
+  --color-accent-solid-active: #5B21B6;
+  --color-accent-subtle: rgba(139, 92, 246, 0.08);
+  --color-accent-subtle-hover: rgba(139, 92, 246, 0.16);
+  --color-accent-border: #7C3AED;
+  --color-accent-text: #6D28D9;
+  --color-accent-text-hover: #5B21B6;
+}
