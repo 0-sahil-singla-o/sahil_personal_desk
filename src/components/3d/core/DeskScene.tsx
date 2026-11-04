@@ -5,6 +5,7 @@ import { TabletItem } from '../items/TabletItem';
 import { PrinterItem } from '../items/PrinterItem';
 import { PhoneItem } from '../items/PhoneItem';
 import { CatItem } from '../items/CatItem';
+import { DogItem } from '../items/DogItem';
 import { LampItem } from '../items/LampItem';
 import { MugItem } from '../items/MugItem';
 import { DiaryItem } from '../items/DiaryItem';
@@ -63,6 +64,11 @@ export const DeskScene: React.FC = () => {
             position={DESK_LAYOUT.cat.position}
             rotY={DESK_LAYOUT.cat.rotY}
             size={DESK_LAYOUT.cat.size}
+          />
+          <DogItem
+            position={DESK_LAYOUT.dog.position}
+            rotY={DESK_LAYOUT.dog.rotY}
+            size={DESK_LAYOUT.dog.size}
           />
           <BusinessCardItem
             position={DESK_LAYOUT.cards.position}
@@ -180,6 +186,13 @@ export const DeskScene: React.FC = () => {
             opacity={0.3}
             position={DESK_LAYOUT.cat.position}
             rotY={DESK_LAYOUT.cat.rotY}
+          />
+          <ShadowPad
+            w={1.6}
+            d={1.1}
+            opacity={0.3}
+            position={DESK_LAYOUT.dog.position}
+            rotY={DESK_LAYOUT.dog.rotY}
           />
           <ShadowPad
             w={0.6}

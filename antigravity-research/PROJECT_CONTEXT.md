@@ -122,6 +122,32 @@ sanji: { position: [-4.25, 0, -2.70], rotY: 0.14 }, // Back Row Right (peeking b
 - Both TypeScript source components (`src/components/3d/items/*Item.tsx`, `DeskLayout.ts`, `DeskScene.tsx`) and production bundles (`assets/DeskScene-tZGhJadU.js`, `public/assets/DeskScene-tZGhJadU.js`) are kept 100% in sync.
 - Tracked on branch `main`.
 
+### Phase 9: Shih Tzu Dog Companion
+Added a breed-accurate Shih Tzu puppy alongside the sleeping ginger cat on the front edge of the desk:
+- **Model Component**: `src/components/3d/items/DogItem.tsx` / `DogFigure` in production bundles.
+- **Breed Characteristics**:
+  - Dual-tone plush coat: Cream-white base (`#F8F6F0`) with warm caramel honey patches (`#C88A42`) on back saddle and ear fringes.
+  - Fluffy drooped pendant ears with secondary inertial bounce.
+  - Short snub muzzle, white facial fringe/mustache, and glossy black button nose.
+  - Dark puppy eyes with reflective catchlight highlights.
+  - Plumed tail curled over rear hip with multi-jointed dynamic wag physics.
+  - Crimson collar (`#E11D48`) with gold bell tag (`#F59E0B`).
+- **Sound Effects (Web Audio API Procedural Synthesis)**:
+  - `"bark"`: Playful Shih Tzu boof/bark with resonant bandpass filter.
+  - `"pant"`: Breathy rhythmic white noise puffing.
+  - `"whimper"`: Sweet gentle sinusoidal pitch sweep.
+  - `"happy"`: Dual-tone cheerful chirp-barks on tap.
+  - `"snore"`: Low resonant breathing during sleep.
+- **Animations & Mechanics**:
+  - Harmonic ribcage breathing ($1 + \sin(t \cdot \omega) \cdot A$).
+  - Cursor-tracking head kinematics with curious Shih Tzu head tilt roll.
+  - Dynamic tail wagging accelerating from lazy resting wag ($1.5\text{ Hz}$) to excited wagging ($14\text{ Hz}$) on hover/pet.
+  - Animated floating `"Zzz..."` particles when asleep.
+  - Interactive tooltip: `"Shih Tzu Puppy · give a gentle tap / pat to play!"`.
+- **Layout & Shadow**:
+  - Positioned at `[-0.65, 0, 2.38], rotY: 0.10, size: 0.88`, snuggled comfortably beside the cat (`[-1.85, 0, 2.38]`) on the front edge of the desk.
+  - Dedicated ambient occlusion contact shadow pad (`ShadowPad`).
+
 ---
 
 ## 3. Directory Structure & Key Files
@@ -138,7 +164,7 @@ sahil_desk/
 │   ├── logos/                  # Brand/work showcase icons
 │   └── work/                   # Portfolio work covers
 ├── src/                        # Clean TypeScript architecture (components, 3D items, store)
-│   ├── components/3d/items/    # Procedural 3D desk objects (Straw Hats: Luffy, Zoro, Nami, Sanji, Usopp, Robin, + Laptop, Table, etc.)
+│   ├── components/3d/items/    # Procedural 3D desk objects (Straw Hats: Luffy, Zoro, Nami, Sanji, Usopp, Robin; Pets: Cat, Dog; + Laptop, Table, etc.)
 │   ├── components/3d/core/     # Canvas, Camera, Lighting, Shadows, Layout
 │   ├── components/ui/          # Modals, Overlays, Header, Navigation
 │   └── store/deskStore.ts      # Zustand/store definition
