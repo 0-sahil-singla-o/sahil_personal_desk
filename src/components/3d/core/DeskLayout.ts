@@ -27,6 +27,7 @@ export const DESK_LAYOUT = {
   },
   notebook: { position: [2.2, 0, 2] as [number, number, number], rotY: 0.4 },
   zoro: { position: [-4.35, 0, -2] as [number, number, number], rotY: 0.25 },
+  luffy: { position: [-3.75, 0, -1.82] as [number, number, number], rotY: 0.12 },
   cards: { position: [2.82, 0, -0.4] as [number, number, number], rotY: -0.45 },
   cat: { position: [-1.45, 0, 2.38] as [number, number, number], rotY: 0.05, size: 0.92 },
   photo: { position: [3, 0, -1.8] as [number, number, number], rotY: -0.32, scale: 0.75 },

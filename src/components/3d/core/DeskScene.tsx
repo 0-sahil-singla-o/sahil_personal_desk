@@ -11,6 +11,7 @@ import { DiaryItem } from '../items/DiaryItem';
 import { BusinessCardItem } from '../items/BusinessCardItem';
 import { PlantItem } from '../items/PlantItem';
 import { ZoroItem } from '../items/ZoroItem';
+import { LuffyItem } from '../items/LuffyItem';
 import { SpeakerItem } from '../items/SpeakerItem';
 import { RecordItem } from '../items/RecordItem';
 import { GlassesItem } from '../items/GlassesItem';
@@ -87,6 +88,10 @@ export const DeskScene: React.FC = () => {
           <ZoroItem
             position={DESK_LAYOUT.zoro.position}
             rotY={DESK_LAYOUT.zoro.rotY}
+          />
+          <LuffyItem
+            position={DESK_LAYOUT.luffy.position}
+            rotY={DESK_LAYOUT.luffy.rotY}
           />
           <ParcelItem
             position={DESK_LAYOUT.parcel.position}
