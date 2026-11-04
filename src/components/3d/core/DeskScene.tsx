@@ -12,6 +12,10 @@ import { BusinessCardItem } from '../items/BusinessCardItem';
 import { PlantItem } from '../items/PlantItem';
 import { ZoroItem } from '../items/ZoroItem';
 import { LuffyItem } from '../items/LuffyItem';
+import { SanjiItem } from '../items/SanjiItem';
+import { NamiItem } from '../items/NamiItem';
+import { UsoppItem } from '../items/UsoppItem';
+import { RobinItem } from '../items/RobinItem';
 import { SpeakerItem } from '../items/SpeakerItem';
 import { RecordItem } from '../items/RecordItem';
 import { GlassesItem } from '../items/GlassesItem';
@@ -93,6 +97,22 @@ export const DeskScene: React.FC = () => {
             position={DESK_LAYOUT.luffy.position}
             rotY={DESK_LAYOUT.luffy.rotY}
           />
+          <SanjiItem
+            position={DESK_LAYOUT.sanji.position}
+            rotY={DESK_LAYOUT.sanji.rotY}
+          />
+          <NamiItem
+            position={DESK_LAYOUT.nami.position}
+            rotY={DESK_LAYOUT.nami.rotY}
+          />
+          <UsoppItem
+            position={DESK_LAYOUT.usopp.position}
+            rotY={DESK_LAYOUT.usopp.rotY}
+          />
+          <RobinItem
+            position={DESK_LAYOUT.robin.position}
+            rotY={DESK_LAYOUT.robin.rotY}
+          />
           <ParcelItem
             position={DESK_LAYOUT.parcel.position}
             rotY={DESK_LAYOUT.parcel.rotY}
@@ -166,6 +186,36 @@ export const DeskScene: React.FC = () => {
             d={0.55}
             opacity={0.3}
             position={DESK_LAYOUT.zoro.position}
+          />
+          <ShadowPad
+            w={0.6}
+            d={0.55}
+            opacity={0.3}
+            position={DESK_LAYOUT.luffy.position}
+          />
+          <ShadowPad
+            w={0.6}
+            d={0.55}
+            opacity={0.3}
+            position={DESK_LAYOUT.sanji.position}
+          />
+          <ShadowPad
+            w={0.55}
+            d={0.5}
+            opacity={0.3}
+            position={DESK_LAYOUT.nami.position}
+          />
+          <ShadowPad
+            w={0.6}
+            d={0.55}
+            opacity={0.3}
+            position={DESK_LAYOUT.usopp.position}
+          />
+          <ShadowPad
+            w={0.55}
+            d={0.5}
+            opacity={0.3}
+            position={DESK_LAYOUT.robin.position}
           />
           <ShadowPad
             w={1.2}
