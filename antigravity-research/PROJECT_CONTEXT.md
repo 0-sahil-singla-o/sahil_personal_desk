@@ -66,6 +66,62 @@ Implemented the user's custom design system:
   - Clicking the 3D orange dome desk lamp toggles the lamp light ON/OFF and switches between Dark and Light mode.
   - Clicking the floating top-left UI pill (`🌙 Dark` / `☀️ Light`) turns the 3D lamp on/off in sync.
 
+### Phase 6: Custom 3D Procedural Figurines — Straw Hat Pirates Collection (One Piece)
+Created and integrated 5 new custom 3D figurines alongside the original Zoro collectible (6 total Straw Hats), fully matching the stylized Funko Pop / vinyl collectible aesthetic (satin sheen PBR materials, bobblehead spring oscillation on tap, contact shadow pads, and interactive pill tooltips):
+
+1. **Monkey D. Luffy (Captain)**:
+   - **Model Component**: `src/components/3d/items/LuffyItem.tsx`
+   - **Visual Details**: Handcrafted straw hat with wide curved brim, crown indentation, and red band; dark messy bangs; left-eye scar; joyful grin; open red vest; yellow waist sash; blue denim shorts with folded white cuffs; sandals.
+   - **Interaction**: Tap oscillation physics (`speed += 3.2`, `tiltSpeed += 1.4`), audio click trigger, and tooltip: `"Monkey D. Luffy · give him a tap"`.
+
+2. **Roronoa Zoro (Swordsman / First Mate)**:
+   - **Model Component**: `src/components/3d/items/ZoroItem.tsx` / `Kl` in bundle.
+   - **Visual Details**: Signature cropped sea-green hair, black bandana band, left-eye diagonal scar, green samurai coat with purple sash, dual katanas mounted at the hip.
+   - **Interaction**: Bobblehead tap oscillation + tooltip: `"Roronoa Zoro · give him a tap"`.
+
+3. **Cat Burglar Nami (Navigator)**:
+   - **Model Component**: `src/components/3d/items/NamiItem.tsx`
+   - **Visual Details**: Vibrant flowing orange hair; blue & white striped halter bikini top; low-rise blue denim jeans; brown belt with gold buckle; orange shoes; tangerine shoulder tattoo; Log Pose navigator bracelet; segmented Clima-Tact weather staff.
+   - **Interaction**: Bobblehead tap oscillation + tooltip: `"Cat Burglar Nami · give her a tap"`.
+
+4. **Sniper King Usopp (Sniper)**:
+   - **Model Component**: `src/components/3d/items/UsoppItem.tsx`
+   - **Visual Details**: Signature long cylindrical nose; curly dark afro puffs; white beanie/bandana with sniper goggles (teal lenses); mustard-yellow cargo overalls with brown utility shoulder strap; wrist wraps; leather satchel bag; Kuro Kabuto slingshot.
+   - **Interaction**: Bobblehead tap oscillation + tooltip: `"Sniper King Usopp · give him a tap"`.
+
+5. **Nico Robin (Archaeologist)**:
+   - **Model Component**: `src/components/3d/items/RobinItem.tsx`
+   - **Visual Details**: Sleek raven-black hair with front fringe; tinted orange aviator sunglasses perched on forehead; fitted navy leather vest with gold zipper; flowing indigo sarong skirt with gold border; signature crossed-arms *Cien Fleur* pose.
+   - **Interaction**: Bobblehead tap oscillation + tooltip: `"Nico Robin · give her a tap"`.
+
+6. **Black Leg Sanji (Cook)**:
+   - **Model Component**: `src/components/3d/items/SanjiItem.tsx`
+   - **Visual Details**: Golden blonde hair swept over one eye; curly spiral eyebrow; cigarette in mouth with glowing emissive red ember (`#EF4444`); tailored black double-breasted suit; royal blue dress shirt; black tie; hands tucked casually into pockets; polished black dress shoes.
+   - **Interaction**: Bobblehead tap oscillation + tooltip: `"Black Leg Sanji · give him a tap"`.
+
+*(Note: Per explicit user instructions, Jimbei, Brook, and Franky were intentionally omitted from the collection).*
+
+### Phase 7: Desk Layout & Staggered Viewport Optimization
+To prevent any figurine from being obstructed by the tablet docket or receipt printer, an optimized two-row staggered formation was implemented on the left side of the oak desk (`X = -5.85` to `-3.80`, `Z = -2.75` to `-2.05`):
+
+```typescript
+// Optimized coordinates in DeskLayout.ts & DeskScene bundle:
+zoro:  { position: [-5.60, 0, -2.15], rotY: 0.25 }, // Front Row Left
+luffy: { position: [-4.70, 0, -2.10], rotY: 0.18 }, // Front Row Center
+nami:  { position: [-3.80, 0, -2.05], rotY: 0.10 }, // Front Row Right
+usopp: { position: [-5.85, 0, -2.75], rotY: 0.28 }, // Back Row Left (outer flank)
+robin: { position: [-5.15, 0, -2.75], rotY: 0.20 }, // Back Row Mid (peeking between Zoro & Luffy)
+sanji: { position: [-4.25, 0, -2.70], rotY: 0.14 }, // Back Row Right (peeking between Luffy & Nami)
+```
+
+- Each figurine sits with a dedicated `ShadowPad` (`Fe`) at `y = 0` providing realistic ambient occlusion contact shadows on the oak wood surface.
+- Arrival animations are cleanly staggered with arrival orders 12 through 17 via the `Ee` arrival controller and `ns(order)` stagger function.
+
+### Phase 8: Git Remote & Source Code Control
+- Connected repository to GitHub remote: `https://github.com/0-sahil-singla-o/sahil_personal_desk.git`.
+- Both TypeScript source components (`src/components/3d/items/*Item.tsx`, `DeskLayout.ts`, `DeskScene.tsx`) and production bundles (`assets/DeskScene-tZGhJadU.js`, `public/assets/DeskScene-tZGhJadU.js`) are kept 100% in sync.
+- Tracked on branch `main`.
+
 ---
 
 ## 3. Directory Structure & Key Files
@@ -82,7 +138,7 @@ sahil_desk/
 │   ├── logos/                  # Brand/work showcase icons
 │   └── work/                   # Portfolio work covers
 ├── src/                        # Clean TypeScript architecture (components, 3D items, store)
-│   ├── components/3d/items/    # Individual procedural 3D desk objects
+│   ├── components/3d/items/    # Procedural 3D desk objects (Straw Hats: Luffy, Zoro, Nami, Sanji, Usopp, Robin, + Laptop, Table, etc.)
 │   ├── components/3d/core/     # Canvas, Camera, Lighting, Shadows, Layout
 │   ├── components/ui/          # Modals, Overlays, Header, Navigation
 │   └── store/deskStore.ts      # Zustand/store definition
