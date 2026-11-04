@@ -1,10 +1,11 @@
 # Project Context & Reverse-Engineering Architecture
 
-## 1. Project Overview & Target Website
-- **Target URL**: [https://www.pradiplabs.dev/](https://www.pradiplabs.dev/)
+## 1. Project Overview & Target Websites
+- **Original Scene Target URL**: [https://www.pradiplabs.dev/](https://www.pradiplabs.dev/)
+- **Pomodoro Timer Target URL**: [https://pomodorotimer.online/](https://pomodorotimer.online/)
 - **Owner / Creator of Clone**: Sahil Singla (`sahil_desk`)
 - **Core Technology Stack**: Three.js, React 18, React Three Fiber (R3F), Drei, Vite 5, Tailwind CSS, TypeScript.
-- **Goal**: 100% fidelity clone of the interactive 3D procedural desk portfolio, completely self-contained locally, customized with Sahil's branding and a custom Indigo-Violet theme controlled by the 3D desk lamp.
+- **Goal**: 100% fidelity clone of the interactive 3D procedural desk portfolio, completely self-contained locally, customized with Sahil's branding, custom Straw Hat One Piece figurines, a custom Indigo-Violet theme controlled by the 3D desk lamp, and a fully functional 100% clone of the aesthetic Pomodoro Timer running inside the interactive desk tablet.
 
 ---
 
@@ -122,6 +123,26 @@ sanji: { position: [-4.25, 0, -2.70], rotY: 0.14 }, // Back Row Right (peeking b
 - Both TypeScript source components (`src/components/3d/items/*Item.tsx`, `DeskLayout.ts`, `DeskScene.tsx`) and production bundles (`assets/DeskScene-tZGhJadU.js`, `public/assets/DeskScene-tZGhJadU.js`) are kept 100% in sync.
 - Tracked on branch `main`.
 
+### Phase 9: Reverse-Engineered Pomodoro Timer Clone (Target: pomodorotimer.online)
+1. **Target Analysis (REA)**:
+   - Cloned [https://pomodorotimer.online/](https://pomodorotimer.online/) into the 3D desk tablet, replacing the previous static Docker dashboard.
+   - Preserved all surrounding desk collectibles (Straw Hats, cat, coffee mug, lamp, laptop, succulent, vinyl player).
+   - Excluded music playback (reserved for desk radio) and excluded Discord/authentication.
+2. **Dynamic Animated Background (`bg-lofi.mp4`)**:
+   - Extracted official animated study-girl video background `/bg-lofi.mp4` (497 KB).
+   - In focused view, runs `<video src="/bg-lofi.mp4" autoPlay loop muted playsInline>`.
+   - In out-of-focus 3D desk view, renders video frames onto the Three.js `CanvasTexture` in real time.
+3. **Canvas Ambient Particle Simulations**:
+   - Replicated exact particle physics from `pomodorotimer.online`: Rain (angled streaks with splashes), Bubbles (buoyant wobbling spheres with crescent specular arcs), Stars (twinkling opacity pulse), and Motes (golden ascending glow).
+4. **100% Visual Parity (In-Focus vs. Out-of-Focus)**:
+   - Top Bar: `"Pomodoro Timer"` brand, `🔥 streak`, `🎨 Aesthetics`, and `⚙️ Settings`.
+   - Left Floating Dock: Utility capsules (`🏆`, `🔥`, `🎨`, `⚙️`).
+   - Center Dial: Space Grotesk live countdown (`25:00`), circular progress arc, and `• Focus in progress` badge.
+   - Active Task Indicator: `🎯 Focusing on: <Task Title> 🍅 <act>/<est>`.
+   - Centered Italic Quote: Playfair Display cursive.
+   - Bottom Dock: Reset `↺`, Accent-colored Start/Pause button, and `📋 Tasks (<count>)`.
+   - Detailed specifications preserved in [`POMODORO_CONTEXT.md`](file:///d:/Sahil/Three%20js%20websites/sahil_desk/antigravity-research/POMODORO_CONTEXT.md).
+
 ---
 
 ## 3. Directory Structure & Key Files
@@ -129,21 +150,32 @@ sanji: { position: [-4.25, 0, -2.70], rotY: 0.14 }, // Back Row Right (peeking b
 ```
 sahil_desk/
 ├── assets/                     # Complete Three.js WebGL procedural engine & React chunks
+│   ├── DeskScene-tZGhJadU.js   # 3D desk scene with dynamic tablet CanvasTexture
+│   ├── ScreenOverlay-BcVxfGAm.js # Focused tablet overlay with video and ambient particle canvas
+│   └── pomodoroEngine.js       # Core timer state store & 2D canvas renderer
 ├── public/
 │   ├── tokens.css              # Tier 1 primitives & Tier 2 semantic variables (Dark & Light)
 │   ├── background.css          # Animated drifting blobs, surface glass, typography
 │   ├── background.js           # Particle canvas & window.BgField controller
+│   ├── bg-lofi.mp4             # Official animated study-girl video background (497 KB)
+│   ├── bg-lofi.webp            # Lofi static fallback
+│   ├── bg-fantasy.webp         # Fantasy theme artwork
+│   ├── bg-pastel.webp          # Pastel theme artwork
+│   ├── bg-cyberpunk.webp       # Cyberpunk theme artwork
+│   ├── bg-*-thumb.webp         # Aesthetics selection thumbnails
+│   ├── pomodoroEngine.js       # Single source of truth state store & canvas rendering
 │   ├── fonts/                  # Woff2 fonts (Caveat handwriting, Inter)
 │   ├── desk/                   # Screen textures for laptop, tablet, phone
 │   ├── logos/                  # Brand/work showcase icons
 │   └── work/                   # Portfolio work covers
 ├── src/                        # Clean TypeScript architecture (components, 3D items, store)
-│   ├── components/3d/items/    # Procedural 3D desk objects (Straw Hats: Luffy, Zoro, Nami, Sanji, Usopp, Robin, + Laptop, Table, etc.)
+│   ├── components/3d/items/    # Procedural 3D desk objects (TabletItem, Luffy, Zoro, Nami, etc.)
 │   ├── components/3d/core/     # Canvas, Camera, Lighting, Shadows, Layout
 │   ├── components/ui/          # Modals, Overlays, Header, Navigation
 │   └── store/deskStore.ts      # Zustand/store definition
-├── antigravity-research/       # Reverse-engineering discovery scripts & raw reference copies
-│   ├── PROJECT_CONTEXT.md      # This file
+├── antigravity-research/       # Reverse-engineering discovery scripts & context documents
+│   ├── PROJECT_CONTEXT.md      # Unified system & architecture documentation (This file)
+│   ├── POMODORO_CONTEXT.md     # Detailed Pomodoro REA & implementation context
 │   ├── downloaded_site/        # Untouched raw bundle backup
 │   └── _research/              # Formatted inspection dumps
 ├── index.html                  # HTML entry point, theme bootstrap snippet
@@ -164,7 +196,9 @@ If you are an AI assistant picking up this codebase on another machine:
    ```
 2. **Access local server**: Open `http://localhost:5173/`.
 3. **Core rules to respect**:
+   - **NEVER execute `git push`** without explicit user confirmation.
    - **Do not alter 3D object materials or shaders** unless specifically requested by the user.
    - Maintain the **two-tier design token system** in `public/tokens.css` (never hardcode arbitrary hex/rgb colors in component CSS).
    - Theme switching is driven by the desk lamp store in `assets/index-CVLljmmv.js` (`F.toggleLamp()`). Keep the two-way sync between the lamp and `window.BgField`.
+   - Keep the Pomodoro timer engine in `public/pomodoroEngine.js` as the single source of truth for all timer, task, aesthetic, and particle state.
    - All research scripts and raw reference copies live safely in `antigravity-research/` for reference.

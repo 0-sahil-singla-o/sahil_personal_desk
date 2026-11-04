@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Printer, ArrowRight, ExternalLink, Sparkles, Send } from 'lucide-react';
+import { X, Sparkles, Send } from 'lucide-react';
 import { deskStore, useDeskStore } from '../../store/deskStore';
+import { PomodoroTimer } from './pomodoro/PomodoroTimer';
 
 export const ScreenOverlay: React.FC = () => {
   const focus = useDeskStore((s) => s.focus);
@@ -10,6 +11,8 @@ export const ScreenOverlay: React.FC = () => {
   ]);
 
   if (!focus) return null;
+
+  const isTablet = focus === 'tablet';
 
   const handleSendMessage = () => {
     if (!chatInput.trim()) return;
@@ -29,32 +32,48 @@ export const ScreenOverlay: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-10 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-8 bg-black/70 backdrop-blur-md animate-in fade-in duration-300">
       {/* Container Box */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-neutral-200">
+      <div
+        className={`relative w-full overflow-hidden flex flex-col shadow-2xl transition-all duration-300 ${
+          isTablet
+            ? 'max-w-4xl h-[92vh] max-h-[820px] bg-slate-950 rounded-[2.5rem] border border-white/10 ring-1 ring-white/10'
+            : 'max-w-4xl max-h-[90vh] bg-white rounded-3xl border border-neutral-200'
+        }`}
+      >
         {/* Top Header Bar */}
-        <div className="px-6 py-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/80">
+        <div
+          className={`px-6 py-3.5 flex items-center justify-between border-b ${
+            isTablet
+              ? 'border-white/10 bg-slate-900/90 text-neutral-300'
+              : 'border-neutral-100 bg-neutral-50/80 text-neutral-500'
+          }`}
+        >
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-red-400" />
             <span className="w-3 h-3 rounded-full bg-amber-400" />
             <span className="w-3 h-3 rounded-full bg-emerald-400" />
-            <span className="ml-3 text-xs font-semibold text-neutral-500 uppercase tracking-wider">
+            <span className="ml-3 text-xs font-semibold uppercase tracking-wider">
               {focus === 'laptop' && 'Workstation · Portfolio Projects'}
-              {focus === 'tablet' && 'Docket POS · Invoice Generator'}
+              {focus === 'tablet' && 'Tablet · Pomodoro Focus Studio'}
               {focus === 'phone' && 'Automotive AI Sales Assistant'}
             </span>
           </div>
 
           <button
             onClick={() => deskStore.close()}
-            className="p-1.5 rounded-full hover:bg-neutral-200 text-neutral-500 transition-colors"
+            className={`p-1.5 rounded-full transition-colors ${
+              isTablet
+                ? 'hover:bg-white/10 text-neutral-400 hover:text-white'
+                : 'hover:bg-neutral-200 text-neutral-500'
+            }`}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className={`flex-1 overflow-hidden ${isTablet ? 'p-0 flex flex-col' : 'overflow-y-auto p-6'}`}>
           {/* LAPTOP VIEW: Projects */}
           {focus === 'laptop' && (
             <div className="space-y-8">
@@ -130,49 +149,8 @@ export const ScreenOverlay: React.FC = () => {
             </div>
           )}
 
-          {/* TABLET VIEW: Docket Invoice Generator */}
-          {focus === 'tablet' && (
-            <div className="max-w-xl mx-auto space-y-6">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-neutral-900">
-                  Docket POS Checkout
-                </h2>
-                <p className="text-sm text-neutral-500 mt-1">
-                  Click 'Print Receipt' to trigger the 3D thermal printer on the desk!
-                </p>
-              </div>
-
-              <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 space-y-4">
-                <div className="flex justify-between text-sm pb-2 border-b border-neutral-200">
-                  <span className="font-semibold text-neutral-900">3D Procedural Desk Experience</span>
-                  <span className="font-medium">$120.00</span>
-                </div>
-                <div className="flex justify-between text-sm pb-2 border-b border-neutral-200">
-                  <span className="font-semibold text-neutral-900">WebGL / Three.js Engine</span>
-                  <span className="font-medium">$340.00</span>
-                </div>
-                <div className="flex justify-between text-sm pb-2 border-b border-neutral-200">
-                  <span className="font-semibold text-neutral-900">Full Stack Automation</span>
-                  <span className="font-medium">$250.00</span>
-                </div>
-                <div className="flex justify-between text-base font-bold pt-2">
-                  <span>Total Due</span>
-                  <span className="text-emerald-600">$710.00</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  deskStore.triggerPrint();
-                  deskStore.close();
-                }}
-                className="w-full py-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-medium flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95"
-              >
-                <Printer className="w-5 h-5" />
-                <span>Print Receipt On Desk Printer</span>
-              </button>
-            </div>
-          )}
+          {/* TABLET VIEW: Pomodoro Timer Web App */}
+          {focus === 'tablet' && <PomodoroTimer />}
 
           {/* PHONE VIEW: AI Sales Chat & Vehicle Catalog */}
           {focus === 'phone' && (

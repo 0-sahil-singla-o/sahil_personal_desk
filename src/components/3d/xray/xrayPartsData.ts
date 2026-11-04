@@ -18,7 +18,7 @@ export const XRAY_PARTS: XRayPart[] = [
   {
     id: "tablet",
     name: "Tablet",
-    how: "It runs the real docket screen. Fill it in, press print, and the printer beside it prints the receipt while the camera steps back to watch.",
+    how: "Runs a live Pomodoro focus timer with task management, customizable aesthetic themes, procedural ambient audio alarms, and session tracking.",
   },
   {
     id: "laptop",
