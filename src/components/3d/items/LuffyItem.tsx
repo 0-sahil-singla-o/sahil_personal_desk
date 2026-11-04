@@ -2,7 +2,6 @@ import React, { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
-import { useDeskStore } from '../../../store/deskStore';
 
 interface LuffyItemProps {
   position: [number, number, number];
@@ -16,12 +15,14 @@ const vinyl = (color: string, roughness = 0.45) =>
 
 const SKIN = '#EBCBA8';
 const HAIR = '#1A1A1D';
-const STRAW_YELLOW = '#E8C547';
-const RIBBON_RED = '#C1121F';
-const VEST_RED = '#D62828';
-const SASH_YELLOW = '#F4D03F';
-const SHORTS_BLUE = '#2B5F9E';
+const STRAW_YELLOW = '#EAB308';
+const RIBBON_RED = '#DC2626';
+const VEST_RED = '#DC2626';
+const SASH_YELLOW = '#FACC15';
+const SHORTS_BLUE = '#2563EB';
 const SCAR_RED = '#B5544B';
+const SANDAL_BROWN = '#854D0E';
+const CUFFS_WHITE = '#FFFFFF';
 
 /** Procedural Canvas texture for Luffy's open vest and iconic X-scar */
 function createLuffyChestTexture(): THREE.CanvasTexture {
@@ -29,10 +30,10 @@ function createLuffyChestTexture(): THREE.CanvasTexture {
   canvas.width = canvas.height = 128;
   const ctx = canvas.getContext('2d')!;
 
-  // V-neck open vest
+  // V-neck open vest shape
   ctx.beginPath();
-  ctx.moveTo(14, 0);
-  ctx.lineTo(114, 0);
+  ctx.moveTo(10, 0);
+  ctx.lineTo(118, 0);
   ctx.lineTo(64, 128);
   ctx.closePath();
   ctx.clip();
@@ -43,34 +44,34 @@ function createLuffyChestTexture(): THREE.CanvasTexture {
 
   // The iconic Akainu X-scar across the chest
   ctx.strokeStyle = SCAR_RED;
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 5;
   ctx.lineCap = 'round';
 
   // Slash 1: Top-left to bottom-right
   ctx.beginPath();
-  ctx.moveTo(32, 22);
-  ctx.lineTo(96, 98);
+  ctx.moveTo(28, 18);
+  ctx.lineTo(100, 102);
   ctx.stroke();
 
   // Slash 2: Top-right to bottom-left
   ctx.beginPath();
-  ctx.moveTo(96, 22);
-  ctx.lineTo(32, 98);
+  ctx.moveTo(100, 18);
+  ctx.lineTo(28, 102);
   ctx.stroke();
 
   // Stitches cross-hatching
   ctx.lineWidth = 2;
   ctx.strokeStyle = '#4A2820';
   for (let i = 0; i <= 6; i++) {
-    const x1 = 34 + (58 * i) / 6;
-    const y1 = 24 + (70 * i) / 6;
+    const x1 = 30 + (64 * i) / 6;
+    const y1 = 20 + (76 * i) / 6;
     ctx.beginPath();
     ctx.moveTo(x1 - 4, y1 + 4);
     ctx.lineTo(x1 + 4, y1 - 4);
     ctx.stroke();
 
-    const x2 = 94 - (58 * i) / 6;
-    const y2 = 24 + (70 * i) / 6;
+    const x2 = 98 - (64 * i) / 6;
+    const y2 = 20 + (76 * i) / 6;
     ctx.beginPath();
     ctx.moveTo(x2 - 4, y2 - 4);
     ctx.lineTo(x2 + 4, y2 + 4);
@@ -95,14 +96,15 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
     () => ({
       skin: vinyl(SKIN),
       hair: vinyl(HAIR, 0.5),
-      hat: vinyl(STRAW_YELLOW, 0.6),
+      hat: vinyl(STRAW_YELLOW, 0.65),
       ribbon: vinyl(RIBBON_RED, 0.4),
       vest: vinyl(VEST_RED, 0.5),
       sash: vinyl(SASH_YELLOW, 0.55),
       shorts: vinyl(SHORTS_BLUE, 0.55),
-      cuffs: vinyl('#F6F3FB', 0.6),
-      sandals: vinyl('#8D6E63', 0.4),
-      eye: vinyl('#0E0E10', 0.12),
+      cuffs: vinyl(CUFFS_WHITE, 0.6),
+      sandals: vinyl(SANDAL_BROWN, 0.4),
+      eye: vinyl('#0E0E10', 0.1),
+      white: vinyl('#FFFFFF', 0.1),
       scar: vinyl(SCAR_RED, 0.5),
       chest: new THREE.MeshStandardMaterial({
         map: createLuffyChestTexture(),
@@ -136,15 +138,16 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
     w.tiltSpeed += 1.4;
   };
 
-  // Hair spikes around forehead & sides
+  // Hair spikes framing the face from sides, keeping forehead center open
   const hairSpikes: [number, number, number, number, number][] = [
-    [-0.2, 0.26, 0.08, 0.7, -0.2],
-    [-0.11, 0.3, 0.14, 0.3, -0.35],
-    [0.0, 0.32, 0.16, 0, -0.4],
-    [0.11, 0.3, 0.14, -0.3, -0.35],
-    [0.2, 0.26, 0.08, -0.7, -0.2],
-    [-0.28, 0.14, 0.04, 1.2, 0],
-    [0.28, 0.14, 0.04, -1.2, 0],
+    [-0.2, 0.26, 0.14, 0.7, -0.2],
+    [-0.14, 0.31, 0.18, 0.35, -0.3],
+    [0.14, 0.31, 0.18, -0.35, -0.3],
+    [0.2, 0.26, 0.14, -0.7, -0.2],
+    [-0.28, 0.16, 0.03, 1.25, 0],
+    [0.28, 0.16, 0.03, -1.25, 0],
+    [-0.2, 0.25, -0.1, 0.45, 0.2],
+    [0.2, 0.25, -0.1, -0.45, 0.2],
   ];
 
   return (
@@ -160,99 +163,116 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
         }}
         onPointerOut={() => setHovered(false)}
       >
-        {/* Legs: Blue denim shorts with rolled white cuffs and sandals */}
+        {/* Legs: Bare skin shins, white fluffy cuffs, and blue denim shorts */}
         {[-1, 1].map((side) => (
           <group key={side}>
             {/* Sandal Sole */}
             <mesh
               material={materials.sandals}
-              position={[side * 0.075, 0.02, 0.02]}
+              position={[side * 0.08, 0.013, 0.02]}
               castShadow
             >
-              <boxGeometry args={[0.09, 0.03, 0.15]} />
+              <boxGeometry args={[0.095, 0.025, 0.16]} />
             </mesh>
-            {/* Bare Lower Leg */}
-            <mesh material={materials.skin} position={[side * 0.072, 0.09, 0]}>
-              <cylinderGeometry args={[0.04, 0.042, 0.11, 12]} />
+            {/* Bare Foot on Sandal */}
+            <mesh
+              material={materials.skin}
+              position={[side * 0.08, 0.028, 0.02]}
+              castShadow
+            >
+              <boxGeometry args={[0.076, 0.022, 0.14]} />
             </mesh>
-            {/* White Rolled Cuff */}
+            {/* Bare Lower Leg (Shin/Calf) */}
+            <mesh material={materials.skin} position={[side * 0.08, 0.095, 0]}>
+              <cylinderGeometry args={[0.038, 0.042, 0.12, 14]} />
+            </mesh>
+            {/* Iconic Fluffy White Rolled Cuff */}
             <mesh
               material={materials.cuffs}
-              position={[side * 0.072, 0.16, 0]}
+              position={[side * 0.08, 0.175, 0]}
               castShadow
             >
-              <cylinderGeometry args={[0.055, 0.055, 0.04, 14]} />
+              <cylinderGeometry args={[0.064, 0.064, 0.042, 18]} />
             </mesh>
-            {/* Blue Denim Shorts */}
+            {/* Blue Denim Shorts Leg */}
             <mesh
               material={materials.shorts}
-              position={[side * 0.072, 0.21, 0]}
+              position={[side * 0.08, 0.235, 0]}
               castShadow
             >
-              <cylinderGeometry args={[0.052, 0.054, 0.08, 14]} />
+              <cylinderGeometry args={[0.055, 0.06, 0.09, 16]} />
             </mesh>
           </group>
         ))}
 
-        {/* Torso: Red vest with open V at chest */}
+        {/* Blue Denim Shorts Pelvis / Hips */}
         <mesh
-          material={materials.vest}
-          position-y={0.29}
+          material={materials.shorts}
+          position-y={0.31}
           scale={[1, 1, 0.78]}
           castShadow
         >
-          <cylinderGeometry args={[0.15, 0.185, 0.24, 28]} />
-        </mesh>
-        <mesh
-          material={materials.vest}
-          position-y={0.49}
-          scale={[1, 1, 0.78]}
-          castShadow
-        >
-          <cylinderGeometry args={[0.145, 0.15, 0.18, 28]} />
-        </mesh>
-        {/* Open Chest with Akainu X-Scar */}
-        <mesh material={materials.chest} position={[0, 0.51, 0.119]}>
-          <planeGeometry args={[0.15, 0.15]} />
+          <cylinderGeometry args={[0.148, 0.158, 0.12, 28]} />
         </mesh>
 
         {/* Yellow Tied Waist Sash */}
         <mesh
           material={materials.sash}
-          position-y={0.41}
-          scale={[1, 1, 0.8]}
+          position-y={0.39}
+          scale={[1, 1, 0.82]}
           castShadow
         >
-          <cylinderGeometry args={[0.158, 0.162, 0.065, 28]} />
+          <cylinderGeometry args={[0.156, 0.154, 0.06, 28]} />
         </mesh>
-        {/* Sash Knot and hanging ribbon */}
+        {/* Sash Knot and Hanging Ribbon */}
         <mesh
           material={materials.sash}
-          position={[0.1, 0.32, 0.1]}
-          rotation={[0.15, 0, -0.18]}
+          position={[0.12, 0.38, 0.11]}
           castShadow
         >
-          <boxGeometry args={[0.055, 0.17, 0.025]} />
+          <sphereGeometry args={[0.04, 12, 10]} />
+        </mesh>
+        <mesh
+          material={materials.sash}
+          position={[0.13, 0.3, 0.1]}
+          rotation={[0.15, 0, -0.2]}
+          castShadow
+        >
+          <boxGeometry args={[0.05, 0.14, 0.02]} />
         </mesh>
 
-        {/* Arms: Red short sleeves + bare skin arms & fists */}
+        {/* Upper Torso: Red sleeveless vest */}
+        <mesh
+          material={materials.vest}
+          position-y={0.5}
+          scale={[1, 1, 0.78]}
+          castShadow
+        >
+          <cylinderGeometry args={[0.142, 0.15, 0.17, 28]} />
+        </mesh>
+        {/* Open Chest Panel with Akainu X-Scar */}
+        <mesh material={materials.chest} position={[0, 0.505, 0.12]}>
+          <planeGeometry args={[0.15, 0.16]} />
+        </mesh>
+
+        {/* Arms: Red short armholes + bare skin arms & fists */}
         {[-1, 1].map((side) => (
           <group
             key={side}
-            position={[side * 0.17, 0.57, 0]}
+            position={[side * 0.175, 0.54, 0]}
             rotation-z={side * 0.35}
           >
-            {/* Red short sleeve */}
+            {/* Red sleeveless armhole */}
             <mesh material={materials.vest} position-y={-0.04} castShadow>
-              <cylinderGeometry args={[0.045, 0.055, 0.08, 14]} />
+              <cylinderGeometry args={[0.048, 0.056, 0.07, 14]} />
             </mesh>
             {/* Bare arm */}
             <mesh material={materials.skin} position-y={-0.12} castShadow>
-              <cylinderGeometry args={[0.038, 0.04, 0.1, 12]} />
+              <cylinderGeometry args={[0.038, 0.04, 0.11, 12]} />
             </mesh>
             {/* Clenched fist */}
             <mesh material={materials.skin} position-y={-0.2} castShadow>
-              <sphereGeometry args={[0.045, 14, 12]} />
+              <sphereGeometry args={[0.046, 14, 12]} />
             </mesh>
           </group>
         ))}
@@ -271,14 +291,14 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
           {/* Hair base */}
           <mesh
             material={materials.hair}
-            position={[0, 0.35, -0.02]}
-            scale={[0.3, 0.16, 0.26]}
+            position={[0, 0.38, -0.03]}
+            scale={[0.31, 0.17, 0.26]}
             castShadow
           >
             <sphereGeometry args={[1, 28, 18]} />
           </mesh>
 
-          {/* Hair Spikes */}
+          {/* Hair Spikes framing face */}
           {hairSpikes.map(([x, y, z, leanX, leanZ], idx) => (
             <mesh
               key={idx}
@@ -287,61 +307,78 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
               rotation={[leanZ, 0, leanX]}
               castShadow
             >
-              <coneGeometry args={[0.065, 0.18, 7]} />
+              <coneGeometry args={[0.06, 0.17, 7]} />
             </mesh>
           ))}
 
           {/* Straw Hat: Brim, Red Ribbon, and Dome Crown */}
-          <group position={[0, 0.44, -0.02]} rotation-x={-0.12}>
+          <group position={[0, 0.42, -0.015]} rotation-x={-0.15}>
             {/* Wide Straw Brim */}
             <mesh material={materials.hat} castShadow receiveShadow>
-              <cylinderGeometry args={[0.44, 0.44, 0.024, 32]} />
+              <cylinderGeometry args={[0.46, 0.46, 0.022, 36]} />
             </mesh>
             {/* Crimson Red Ribbon */}
-            <mesh material={materials.ribbon} position-y={0.03} castShadow>
-              <cylinderGeometry args={[0.312, 0.312, 0.042, 32]} />
+            <mesh material={materials.ribbon} position-y={0.025} castShadow>
+              <cylinderGeometry args={[0.315, 0.315, 0.042, 36]} />
             </mesh>
             {/* Straw Hat Dome Crown */}
-            <mesh material={materials.hat} position-y={0.04} castShadow>
-              <sphereGeometry args={[0.31, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.5]} />
+            <mesh
+              material={materials.hat}
+              position-y={0.045}
+              scale={[1, 0.82, 1.05]}
+              castShadow
+            >
+              <sphereGeometry args={[0.31, 28, 18, 0, Math.PI * 2, 0, Math.PI * 0.5]} />
             </mesh>
           </group>
 
-          {/* Eyes (Round stylized vinyl Pop eyes) */}
-          <mesh material={materials.eye} position={[-0.11, 0.2, 0.223]}>
-            <sphereGeometry args={[0.055, 18, 12]} />
+          {/* Pop Eyes with white catchlight dots */}
+          {[-1, 1].map((side) => (
+            <group key={side}>
+              <mesh
+                material={materials.eye}
+                position={[side * 0.115, 0.205, 0.233]}
+                scale={[1, 1.08, 0.4]}
+              >
+                <sphereGeometry args={[0.058, 20, 14]} />
+              </mesh>
+              <mesh
+                material={materials.white}
+                position={[side * 0.115 - side * 0.018, 0.222, 0.238]}
+                scale={[1, 1, 0.3]}
+              >
+                <sphereGeometry args={[0.015, 10, 8]} />
+              </mesh>
+            </group>
+          ))}
+
+          {/* Left Eye Scar (Stitched scar under his left eye, viewer's right) */}
+          <mesh material={materials.scar} position={[0.115, 0.128, 0.234]}>
+            <boxGeometry args={[0.055, 0.008, 0.005]} />
           </mesh>
-          <mesh material={materials.eye} position={[0.11, 0.2, 0.223]}>
-            <sphereGeometry args={[0.055, 18, 12]} />
+          <mesh material={materials.scar} position={[0.1, 0.128, 0.235]}>
+            <boxGeometry args={[0.006, 0.02, 0.005]} />
+          </mesh>
+          <mesh material={materials.scar} position={[0.13, 0.128, 0.235]}>
+            <boxGeometry args={[0.006, 0.02, 0.005]} />
           </mesh>
 
-          {/* Two-stitch Eye Scar under the Left Eye */}
-          <mesh material={materials.scar} position={[-0.11, 0.125, 0.224]}>
-            <boxGeometry args={[0.045, 0.008, 0.004]} />
-          </mesh>
-          <mesh material={materials.scar} position={[-0.125, 0.115, 0.224]}>
-            <boxGeometry args={[0.006, 0.025, 0.004]} />
-          </mesh>
-          <mesh material={materials.scar} position={[-0.095, 0.115, 0.224]}>
-            <boxGeometry args={[0.006, 0.025, 0.004]} />
-          </mesh>
-
-          {/* Nose */}
+          {/* Cute Button Nose */}
           <mesh
             material={materials.skin}
-            position={[0, 0.16, 0.225]}
+            position={[0, 0.165, 0.236]}
             scale={[0.8, 1, 0.5]}
           >
-            <sphereGeometry args={[0.016, 10, 8]} />
+            <sphereGeometry args={[0.018, 10, 8]} />
           </mesh>
 
           {/* Cheerful Grin */}
           <mesh
             material={materials.eye}
-            position={[0, 0.09, 0.224]}
-            rotation-z={Math.PI}
+            position={[0, 0.12, 0.234]}
+            rotation-z={Math.PI * 1.15}
           >
-            <torusGeometry args={[0.045, 0.006, 6, 16, Math.PI * 0.6]} />
+            <torusGeometry args={[0.065, 0.007, 8, 20, Math.PI * 0.7]} />
           </mesh>
 
           {/* Ears */}
@@ -349,7 +386,7 @@ export const LuffyItem: React.FC<LuffyItemProps> = ({
             <mesh
               key={side}
               material={materials.skin}
-              position={[side * 0.28, 0.19, 0.02]}
+              position={[side * 0.285, 0.19, 0.02]}
               scale={[0.5, 1, 0.8]}
             >
               <sphereGeometry args={[0.055, 12, 10]} />
