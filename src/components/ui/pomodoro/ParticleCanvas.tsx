@@ -15,6 +15,7 @@ interface Particle {
   alpha: number;
   alphaSpeed: number;
   length?: number; // for rain
+  wobble?: number;
 }
 
 export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ effect, accentColor }) => {
@@ -24,7 +25,7 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ effect, accentCo
     const canvas = canvasRef.current;
     if (!canvas || effect === 'none') return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animId: number;
@@ -38,44 +39,72 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ effect, accentCo
     };
     window.addEventListener('resize', handleResize);
 
-    // Initialize particles based on selected effect
-    const count = effect === 'rain' ? 60 : effect === 'stars' ? 70 : 45;
+    const count = effect === 'rain' ? 80 : effect === 'bubbles' ? 30 : effect === 'stars' ? 50 : 40;
     const particles: Particle[] = [];
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: effect === 'bubbles' ? Math.random() * 6 + 2 : Math.random() * 2.2 + 0.8,
-        speedX: effect === 'rain' ? 0.3 : (Math.random() - 0.5) * 0.4,
-        speedY: effect === 'rain' ? Math.random() * 3 + 2.5 : effect === 'stars' ? 0 : -(Math.random() * 0.6 + 0.2),
-        alpha: Math.random() * 0.7 + 0.2,
-        alphaSpeed: (Math.random() * 0.01 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
-        length: Math.random() * 14 + 8,
+        radius: effect === 'bubbles' ? Math.random() * 8 + 4 : Math.random() * 2 + 1,
+        speedX: effect === 'rain' ? 1.2 : (Math.random() - 0.5) * 0.3,
+        speedY: effect === 'rain' ? Math.random() * 6 + 14 : effect === 'stars' ? 0.04 : -(Math.random() * 0.7 + 0.3),
+        alpha: Math.random() * 0.5 + 0.4,
+        alphaSpeed: 0.01,
+        length: Math.random() * 16 + 24,
+        wobble: Math.random() * 6.28,
       });
     }
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      particles.forEach((p) => {
-        // Update positions
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        // Twinkle
-        p.alpha += p.alphaSpeed;
-        if (p.alpha > 0.85 || p.alpha < 0.15) {
-          p.alphaSpeed *= -1;
-        }
-
-        // Wrap around boundaries
-        if (effect === 'rain') {
-          if (p.y > height) {
-            p.y = -10;
+      if (effect === 'rain') {
+        // High-performance single-pass batched rain
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + p.speedX * 2, p.y + (p.length || 24));
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.y > height + 30) {
+            p.y = -40;
             p.x = Math.random() * width;
           }
-        } else {
+        }
+        ctx.stroke();
+      } else if (effect === 'bubbles') {
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          p.wobble = (p.wobble || 0) + 0.03;
+          const ox = p.x + Math.sin(p.wobble) * 3;
+          ctx.moveTo(ox + p.radius, p.y);
+          ctx.arc(ox, p.y, p.radius, 0, Math.PI * 2);
+          p.y += p.speedY;
+          p.x += p.speedX;
+          if (p.y < -p.radius - 5) {
+            p.y = height + p.radius + 5;
+            p.x = Math.random() * width;
+          }
+        }
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+        ctx.fill();
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      } else {
+        // Stars or Motes: single batched draw call
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          ctx.moveTo(p.x + p.radius, p.y);
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          p.y += p.speedY;
+          p.x += p.speedX;
           if (p.y < -10) {
             p.y = height + 10;
             p.x = Math.random() * width;
@@ -83,35 +112,9 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ effect, accentCo
           if (p.x < -10) p.x = width + 10;
           if (p.x > width + 10) p.x = -10;
         }
-
-        // Draw particle
-        ctx.save();
-        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
-
-        if (effect === 'rain') {
-          ctx.strokeStyle = accentColor;
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p.x + p.speedX * 2, p.y + (p.length || 10));
-          ctx.stroke();
-        } else if (effect === 'bubbles') {
-          ctx.strokeStyle = accentColor;
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.stroke();
-        } else {
-          // Motes or Stars
-          ctx.fillStyle = accentColor;
-          ctx.shadowBlur = effect === 'stars' ? 8 : 4;
-          ctx.shadowColor = accentColor;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.restore();
-      });
+        ctx.fillStyle = accentColor;
+        ctx.fill();
+      }
 
       animId = requestAnimationFrame(render);
     };
@@ -129,7 +132,16 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ effect, accentCo
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-0 opacity-60"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 4,
+        willChange: 'contents',
+        transform: 'translateZ(0)',
+      }}
     />
   );
 };

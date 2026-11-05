@@ -32,7 +32,11 @@ export const ScreenOverlay: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-8 bg-black/70 backdrop-blur-md animate-in fade-in duration-300">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-8 animate-in fade-in duration-300 ${
+        isTablet ? 'bg-black/80' : 'bg-black/70 backdrop-blur-md'
+      }`}
+    >
       {/* Container Box */}
       <div
         className={`relative w-full overflow-hidden flex flex-col shadow-2xl transition-all duration-300 ${

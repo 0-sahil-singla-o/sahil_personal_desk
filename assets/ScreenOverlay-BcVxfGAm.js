@@ -99,7 +99,7 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
     if (!effect || effect === "off") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     let animId;
 
     const resize = () => {
@@ -124,7 +124,7 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
     }
 
     const E = (min, max) => min + Math.random() * (max - min);
-    const count = effect === "rain" ? 180 : effect === "bubbles" ? 45 : effect === "stars" ? 90 : 80;
+    const count = effect === "rain" ? 100 : effect === "bubbles" ? 32 : effect === "stars" ? 60 : 45;
     const particles = [];
 
     for (let i = 0; i < count; i++) {
@@ -133,10 +133,9 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
           x: E(0, canvas.width || 1200),
           y: E(-60, canvas.height || 800),
           vx: 1.5,
-          vy: E(14, 24),
-          len: E(24, 46),
-          r: E(1.2, 2.2),
-          a: E(0.35, 0.8)
+          vy: E(16, 26),
+          len: E(24, 42),
+          r: 1.5
         });
       } else if (effect === "bubbles") {
         particles.push({
@@ -144,7 +143,7 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
           y: E(0, canvas.height || 800),
           vx: E(-0.25, 0.25),
           vy: E(-0.8, -1.8),
-          r: E(6, 18),
+          r: E(6, 16),
           a: E(0.3, 0.7),
           wobble: E(0, 6.28)
         });
@@ -153,8 +152,8 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
           x: E(0, canvas.width || 1200),
           y: E(0, canvas.height || 800),
           vy: E(0.02, 0.08),
-          r: E(1.2, 3),
-          a: E(0.4, 1),
+          r: E(1.2, 2.5),
+          a: E(0.4, 0.9),
           phase: E(0, 6.28)
         });
       } else { // motes
@@ -163,7 +162,7 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
           y: E(0, canvas.height || 800),
           vx: E(-0.35, 0.35),
           vy: E(-0.4, -1.2),
-          r: E(1.5, 4),
+          r: E(1.5, 3.5),
           a: E(0.4, 0.95)
         });
       }
@@ -175,14 +174,14 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
       ctx.clearRect(0, 0, cw, ch);
 
       if (effect === "rain") {
-        for (const p of particles) {
-          ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + p.a + ")";
-          ctx.lineWidth = p.r;
-          ctx.beginPath();
+        // High-performance single-pass batched rain: ONE single draw call per frame
+        ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + ", 0.72)";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p.x + p.vx * 3, p.y + p.len);
-          ctx.stroke();
-
           p.x += p.vx;
           p.y += p.vy;
           if (p.y > ch + 40) {
@@ -190,23 +189,33 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
             p.x = E(0, cw);
           }
         }
+        ctx.stroke();
       } else if (effect === "bubbles") {
-        for (const p of particles) {
+        // Batched bubbles bodies
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
           p.wobble += 0.03;
           const ox = p.x + Math.sin(p.wobble) * 3;
-          ctx.beginPath();
+          p.ox = ox;
+          ctx.moveTo(ox + p.r, p.y);
           ctx.arc(ox, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (p.a * 0.22) + ")";
-          ctx.fill();
-          ctx.lineWidth = 1.4;
-          ctx.strokeStyle = "rgba(255, 255, 255," + (p.a * 0.7) + ")";
-          ctx.stroke();
+        }
+        ctx.fillStyle = "rgba(" + r + "," + g + "," + b + ", 0.18)";
+        ctx.fill();
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.65)";
+        ctx.stroke();
 
-          // Bubble specular reflection shine
-          ctx.beginPath();
-          ctx.arc(ox - p.r * 0.32, p.y - p.r * 0.32, p.r * 0.22, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(255, 255, 255," + (p.a * 0.8) + ")";
-          ctx.fill();
+        // Batched specular highlights
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          const hx = p.ox - p.r * 0.32;
+          const hy = p.y - p.r * 0.32;
+          const hr = p.r * 0.22;
+          ctx.moveTo(hx + hr, hy);
+          ctx.arc(hx, hy, hr, 0, Math.PI * 2);
 
           p.y += p.vy;
           p.x += p.vx;
@@ -215,37 +224,47 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
             p.x = E(0, cw);
           }
         }
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.fill();
       } else if (effect === "stars") {
-        const time = Date.now() * 0.003;
-        for (const p of particles) {
-          const pulse = 0.5 + 0.5 * Math.sin(time + p.phase);
-          ctx.fillStyle = "rgba(255, 255, 255," + (p.a * pulse) + ")";
-          ctx.beginPath();
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          ctx.moveTo(p.x + p.r, p.y);
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
-
           p.y += p.vy;
           if (p.y > ch) {
             p.y = 0;
             p.x = E(0, cw);
           }
         }
+        ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+        ctx.fill();
       } else { // motes
-        ctx.shadowBlur = 14;
-        ctx.shadowColor = "rgba(" + r + "," + g + "," + b + ", 0.9)";
-        for (const p of particles) {
-          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + p.a + ")";
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
+        // Soft outer glow pass
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          ctx.moveTo(p.x + p.r * 2.2, p.y);
+          ctx.arc(p.x, p.y, p.r * 2.2, 0, Math.PI * 2);
+        }
+        ctx.fillStyle = "rgba(" + r + "," + g + "," + b + ", 0.22)";
+        ctx.fill();
 
+        // Core bright pass
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          ctx.moveTo(p.x + p.r, p.y);
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           p.x += p.vx;
           p.y += p.vy;
           if (p.y < -15) { p.y = ch + 15; p.x = E(0, cw); }
           if (p.x < -15) p.x = cw + 15;
           if (p.x > cw + 15) p.x = -15;
         }
-        ctx.shadowBlur = 0;
+        ctx.fillStyle = "rgba(" + r + "," + g + "," + b + ", 0.9)";
+        ctx.fill();
       }
 
       animId = requestAnimationFrame(renderFrame);
@@ -267,7 +286,9 @@ import{l as qt,n as kt,p as Yt,r as x,M as vt,q as Qt,t as Ct,v as St,x as Me,c 
       width: "100%",
       height: "100%",
       pointerEvents: "none",
-      zIndex: 4
+      zIndex: 4,
+      willChange: "contents",
+      transform: "translateZ(0)"
     }
   });
 }
@@ -299,11 +320,18 @@ function Xa({sheet:t=!1,onPrint:s}){
   const fileInputRef = x.useRef(null);
 
   x.useEffect(() => {
-    if (!engine) return;
-    const unsub = engine.subscribe((newState) => {
+    if (window.PomodoroEngine && window.PomodoroEngine.setFocused) {
+      window.PomodoroEngine.setFocused(true);
+    }
+    const unsub = engine ? engine.subscribe((newState) => {
       setPomo({ ...newState });
-    });
-    return () => unsub();
+    }) : () => {};
+    return () => {
+      unsub();
+      if (window.PomodoroEngine && window.PomodoroEngine.setFocused) {
+        window.PomodoroEngine.setFocused(false);
+      }
+    };
   }, [engine]);
 
   const accent = pomo.accent || "#a78bfa";
@@ -420,7 +448,9 @@ function Xa({sheet:t=!1,onPrint:s}){
           height: "100%",
           objectFit: "cover",
           filter: "brightness(0.85)",
-          pointerEvents: "none"
+          pointerEvents: "none",
+          transform: "translateZ(0)",
+          willChange: "transform"
         }
       }) : e.jsx("div", {
         style: {
